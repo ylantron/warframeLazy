@@ -1,0 +1,176 @@
+#include %A_ScriptDir%/gui/Message.ahk
+#include %A_ScriptDir%/gui/Welcome.ahk
+#include %A_ScriptDir%/gui/StatusBar.ahk
+#include %A_ScriptDir%/gui/FunctionsTab.ahk
+#include %A_ScriptDir%/gui/AutomaticAbilitiesTab.ahk
+#include %A_ScriptDir%/gui/SettingsTab.ahk
+;#include %A_ScriptDir%/gui/AboutTab.ahk
+#include %A_ScriptDir%/functions/functions/SlideAttack.ahk
+#include %A_ScriptDir%/functions/functions/FireMode.ahk
+#include %A_ScriptDir%/functions/functions/UseKeyBehaviour.ahk
+#include %A_ScriptDir%/functions/functions/QuickAbilityUse.ahk
+#include %A_ScriptDir%/functions/automaticAbilities/AutomaticAbilities.ahk
+#include %A_ScriptDir%/functions/settings/Settings.ahk
+#include %A_ScriptDir%/functions/ini/Ini.ahk
+
+class Gui {
+    static hwnd
+    static properties := {width:350, height:220}
+    static key := "capslock"
+    static timeTimer
+
+    static controls = {}
+
+    createGui() {
+        gui, new, % "-resize -minimizeBox -MaximizeBox hwnd" "warframeLazyHwnd", % "Warframe Lazy (Ylan Anderson)"
+        this.hwnd := warframeLazyHwnd
+
+        gui, % this.hwnd ":add", tab3, % " w" Gui.properties.width " h" Gui.properties.height - 16 " x0 y0 hwnd" "tabs"
+        this.controls.tabs := tabs
+
+        FunctionsTab.createGui()
+        AutomaticAbilitiesTab.createGui()
+        SettingsTab.createGui()
+        AboutTab.createGui()
+
+        gui, % this.hwnd ":tab"
+
+        Gui, % this.hwnd ":add", StatusBar,,
+        SB_SetParts(this.properties.width*.90)
+        StatusBar.updateText()
+
+        this.timeTimer := new Timer(1000, StatusBar, "updateTime", "")
+
+        Ini.loadSettings()
+
+        ; handle window close
+        onWindowClose := ObjBindMethod(this, "onWindowClose")
+        OnMessage(0x112, onWindowClose)
+        onWindowClose := ""
+
+        ; prevent window from moving
+        hSysMenu:=DllCall("GetSystemMenu","Int", this.hwnd ,"Int",FALSE) 
+        nCnt:=DllCall("GetMenuItemCount","Int",hSysMenu) 
+        DllCall("RemoveMenu","Int",hSysMenu,"UInt",nCnt-6,"Uint","0x400") 
+        DllCall("DrawMenuBar","Int", this.hwnd) 
+    }
+
+    onWindowClose(wp, lp) {
+        static SC_CLOSE := 0xF060
+        if (A_Gui != this.hwnd)
+        Return
+        
+        if (wp = SC_CLOSE) {
+            this.showHideGui()
+        }
+    }
+
+    showHideGui() {
+        showTimeInStatusBar := ObjBindMethod(StatusBar, "updateTime")
+
+        if !(winexist("ahk_id" this.hwnd) or winactive("ahk_id" this.hwnd)) {
+            WarframeValues.parseConfigFile()
+            StatusBar.updateTime()
+            StatusBar.updateText()
+            gui, % this.hwnd ":show", % "w" this.properties.width " h" this.properties.height " x" this.getExactRightPosition() " y0"
+        } else {
+            gui, % this.hwnd ":hide"
+
+            if (winexist("ahk_exe Warframe.exe")) {
+                winActivate, % "ahk_exe Warframe.exe"
+            } else if (winexist("ahk_exe Warframe.x64.exe")) {
+                winActivate, % "ahk_exe Warframe.x64.exe"
+            }
+        }
+
+        this.timeTimer.toggle()
+        showTimeInStatusBar := "" ; frees object
+    }
+
+    getExactRightPosition() {
+        return A_ScreenWidth - this.properties.width - ((1/4)*(this.properties.width - 320) + 84)
+    }
+
+    refreshValueLabels() {
+        classes := [SlideAttack, FireMode, UseKeyBehaviour, QuickAbilityUse]
+
+        loop, % classes.Length() {
+            classes[A_Index].refreshValueLabel()
+        }
+    }
+
+    disableHotkey() {
+        showHideGui := ObjBindMethod(this, "showHideGui")
+        sendKey := ObjBindMethod(this, "sendKey")
+
+        hotkey, ifWinActive, % "ahk_exe Warframe.x64.exe" ; release show hide key to wf 64 bit
+        hotkey, % this.key, % showHideGui, off
+        hotkey, % this.key, % showHideGui, off
+        hotkey, % "!" this.key, % sendKey, off
+
+        hotkey, ifWinActive, % "ahk_exe Warframe.exe" ; release show hide key to wf 32 bit
+        hotkey, % this.key, % showHideGui, off
+        hotkey, % "!" this.key, % sendKey, off
+
+        hotkey, ifWinActive, % "ahk_id" this.hwnd  ; release show hide key to macro itself
+        hotkey, % this.key, % showHideGui, off
+        hotkey, % "!" this.key, % sendKey, off
+        
+        hotkey, ifWinActive  ; release show hide key to everything else
+        hotkey, % "+^" this.key, % showHideGui, off
+
+        showHideGui := ""
+        sendKey := ""
+    }
+
+    enableHotkey() {
+        showHideGuiObject := ObjBindMethod(this, "showHideGui")
+        sendKeyObject := ObjBindMethod(this, "sendKey")
+
+        iniWrite, % this.key, % Ini.path, % "Macro", % "key"
+
+        hotkey, ifWinActive, % "ahk_exe Warframe.x64.exe" ; bind show hide key to wf 64 bit
+        hotkey, % this.key, % showHideGuiObject, on
+        hotkey, % this.key, % showHideGuiObject, on
+        hotkey, % "!" this.key, % sendKeyObject, on
+
+        hotkey, ifWinActive, % "ahk_exe Warframe.exe" ; bind show hide key to wf 32 bit
+        hotkey, % this.key, % showHideGuiObject, on
+        hotkey, % "!" this.key, % sendKeyObject, on
+
+        hotkey, ifWinActive, % "ahk_id" this.hwnd  ; bind show hide key to macro itself
+        hotkey, % this.key, % showHideGuiObject, on
+        hotkey, % "!" this.key, % sendKeyObject, on
+
+        hotkey, ifWinActive  ; bind show hide key to everything else
+        hotkey, % "+^" this.key, % showHideGuiObject, on
+
+        showHideGuiObject := ""
+        sendKeyObject := ""
+    }
+
+    sendKey(key) {
+        Send, % "{" key "}"
+    }
+
+    disableAllHotkeys() {
+        this.disableHotkey()
+        SlideAttack.disableHotkeys()
+        FireMode.disableHotkeys()
+        UseKeyBehaviour.disableHotkeys()
+        QuickAbilityUse.disableHotkeys()
+    }
+
+    enableAllHotkeys() {
+        this.enableHotkey()
+        SlideAttack.setAction()
+        FireMode.setAction()
+        UseKeyBehaviour.setAction()
+        QuickAbilityUse.setAction()
+    }
+
+    loadSettings() {
+        valLoaded := Ini.readIni("Macro", "key")
+        this.key := (Settings.checkKeyValidity(valLoaded) = 1 ? valLoaded : this.key)
+    }
+}
