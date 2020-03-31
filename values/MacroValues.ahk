@@ -1,10 +1,6 @@
 class MacroValues {
-    static globalScope := 0
-
-    getScope() {
-        return  (MacroValues.globalScope = 1)
-            OR  ((MacroValues.globalScope = 0) 
-                AND (   (WinActive("ahk_exe Warframe.x64.exe"))
-                    OR  (WinActive("ahk_exe Warframe.exe")) ) )
-    }
+    static release := "1"
+    static version := "1"
+    static revision := "0"
+    static build := "0"
 }

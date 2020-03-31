@@ -5,6 +5,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance, force
 CoordMode, tooltip, screen
 
+fileCreateDir, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\"
+fileInstall, resources\Icon128.png, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\icon.png", 1
+fileInstall, resources\Ylantron60.png, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\Ylantron.png", 1
+fileInstall, resources\changelog.txt, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\changelog.txt", 1
+fileInstall, resources\randomPhrases.dat, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\randomPhrases.dat", 1
+
 #include %A_ScriptDir%/functions/Object.ahk
 #include %A_ScriptDir%/functions/Control.ahk
 #include %A_ScriptDir%/functions/Timer.ahk

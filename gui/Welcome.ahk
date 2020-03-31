@@ -22,8 +22,8 @@ class Welcome {
                     .   "write the character ""h""." "`n"
                     .   "To restore the original macro key function the combination ALT + Macro Key is used" "`n`n"
 
-                    .   "Settings of this macro are saved in the file ""warframeLazy.ini""" "`n"
-                    .   "Deleting it will risult in the loss of your saved settings" "`n`n"
+                    ;.   "Settings of this macro are saved in the file ""warframeLazy.ini""" "`n"
+                    ;.   "Deleting it will risult in the loss of your saved settings" "`n`n"
 
                     .   "Although this macro can prevent invalid key to be bound to functions it will not prevent" "`n"
                     .   "some weird behaviour. If this is the case (or if the macro goes crazy) you can panic exit" "`n"

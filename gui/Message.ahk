@@ -1,5 +1,5 @@
 class Message {
     __New(txt) {
-        MsgBox, , % "Warframe Lazy", % txt
+        msgBox, , % "Warframe Lazy", % txt
     }
 }

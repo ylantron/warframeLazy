@@ -9,9 +9,11 @@ class Settings {
 
         function := ObjBindMethod(this, "setCheckboxState")
         guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.guiAlwaysOnTopCheckbox, % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showWelcomeCheckbox, % function
+        
+        function := ObjBindMethod(this, "setCheckboxState", "statusBar")
         guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showEmailCheckbox, % function
         guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showPhraseCheckbox, % function
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showWelcomeCheckbox, % function
 
         function := ""
     }
@@ -107,7 +109,7 @@ class Settings {
         this.setCheckboxState()
     }
 
-    setCheckboxState() {
+    setCheckboxState(target := "") {
         gui, % Gui.hwnd ": " (Control.getControlText(SettingsTab.controls.guiAlwaysOnTopCheckbox) ? "+" : "-") "alwaysOnTop"
 
         if (!Control.getControlText(SettingsTab.controls.showEmailCheckbox)) {
@@ -116,7 +118,9 @@ class Settings {
             guiControl, enable0, % SettingsTab.controls.showPhraseCheckbox
         }
 
-        StatusBar.updateText()
+        if (target = "statusBar") {
+            StatusBar.updateText()
+        }
 
         iniWrite, % Control.getControlText(SettingsTab.controls.guiAlwaysOnTopCheckbox), % Ini.path, % "Macro", % "alwaysOnTop"
         iniWrite, % Control.getControlText(SettingsTab.controls.showEmailCheckbox), % Ini.path, % "Macro", % "showEmail"

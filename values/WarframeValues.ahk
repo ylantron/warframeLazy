@@ -75,174 +75,176 @@ class WarframeValues {
     assignKey(command = "", key = "") {
         switch command
         {
-            case "JUMP":                    this.keys.jump := this.wfKeyToItaKey(key)
+            case "JUMP":                    this.keys.jump := this.wfKeyToKey(key)
             ;case move w
             ;case move a
             ;case move s
             ;case move d
             ;case move up archwing
             ;case move down archwing
-            case "PRE_ATTACK":              this.keys.fireWeapon := this.wfKeyToItaKey(key)
-            case "AIM_WEAPON":              this.keys.aimWeapon := this.wfKeyToItaKey(key)
-            case "SECONDARY_FIRE":          this.keys.secondaryFire := this.wfKeyToItaKey(key)
-            case "RELOAD":                  this.keys.reload := this.wfKeyToItaKey(key)
-            case "CROUCH":                  this.keys.crouchToggle := this.wfKeyToItaKey(key)
-            case "HOLD_CROUCH":             this.keys.crouchHold := this.wfKeyToItaKey(key)
-            case "PRE_RUN":                 this.keys.sprintRoll := this.wfKeyToItaKey(key)
-            case "RUN":                     this.keys.sprint := this.wfKeyToItaKey(key)
-            case "ACTION":                  this.keys.roll := this.wfKeyToItaKey(key)
-            case "USE":                     this.keys.use := this.wfKeyToItaKey(key)
-            case "MELEE":                   this.keys.meleeAttack := this.wfKeyToItaKey(key)
-            case "MELEE_CHANNEL":           this.keys.meleeAttackHeavy := this.wfKeyToItaKey(key)
-            case "NEXT_INV":                this.keys.switchWeapon := this.wfKeyToItaKey(key)
-            case "SWITCH_GUN":              this.keys.switchGun := this.wfKeyToItaKey(key)
-            case "MINI_INVENTORY_HOLD":     this.keys.gearWheel := this.wfKeyToItaKey(key)
-            case "TOGGLE_CHAT_WINDOW":      this.keys.chat := this.wfKeyToItaKey(key)
-            case "ACTIVATE_ABILITY_0":      this.keys.abilities[1] := this.wfKeyToItaKey(key)
-            case "ACTIVATE_ABILITY_1":      this.keys.abilities[2] := this.wfKeyToItaKey(key)
-            case "ACTIVATE_ABILITY_2":      this.keys.abilities[3] := this.wfKeyToItaKey(key)
-            case "ACTIVATE_ABILITY_3":      this.keys.abilities[4] := this.wfKeyToItaKey(key)
-            case "ACTIVATE_ABILITY_4":      this.keys.abilities[5] := this.wfKeyToItaKey(key)
-            case "CYCLE_POWER_NEXT":        this.keys.nextPower := this.wfKeyToItaKey(key)
-            case "CYCLE_POWER_PREV":        this.keys.previousPower := this.wfKeyToItaKey(key)
-            case "POWER_MODIFIER":          this.keys.useSelectedPower := this.wfKeyToItaKey(key)
-            case "SHOW_SECRET_1":           this.keys.placeMarker := this.wfKeyToItaKey(key)
-            case "REVERSE_CAMERA_OFFSET":   this.keys.reverseCamera := this.wfKeyToItaKey(key)
-            case "CYCLE_CAMERA_NEXT":       this.keys.spectateNextPlayer := this.wfKeyToItaKey(key)
-            case "CYCLE_CAMERA_PREV":       this.keys.spectatePreviousPlayer := this.wfKeyToItaKey(key)
-            case "VIEW_HUMAN_PLAYERS":      this.keys.showPlayerList := this.wfKeyToItaKey(key)
-            case "PUSH_TO_TALK":            this.keys.pushToTalk := this.wfKeyToItaKey(key)
-            case "INSPECT":                 this.keys.inspect := this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_0":           this.keys.gears[1]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_1":           this.keys.gears[2]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_2":           this.keys.gears[3]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_3":           this.keys.gears[4]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_4":           this.keys.gears[5]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_5":           this.keys.gears[6]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_6":           this.keys.gears[7]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_7":           this.keys.gears[8]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_8":           this.keys.gears[9]:= this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_9":           this.keys.gears[10] := this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_10":          this.keys.gears[11] := this.wfKeyToItaKey(key)
-            case "GEAR_HOTKEY_11":          this.keys.gears[12] := this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_0":          this.keys.emotes[1]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_1":          this.keys.emotes[2]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_2":          this.keys.emotes[3]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_3":          this.keys.emotes[4]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_4":          this.keys.emotes[5]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_5":          this.keys.emotes[6]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_6":          this.keys.emotes[7]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_7":          this.keys.emotes[8]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_8":          this.keys.emotes[9]:= this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_9":          this.keys.emotes[10] := this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_10":         this.keys.emotes[11] := this.wfKeyToItaKey(key)
-            case "EMOTE_HOTKEY_11":         this.keys.emotes[12] := this.wfKeyToItaKey(key)
-            case "SHOW_LEVEL_MAP":          this.keys.showLevelMap := this.wfKeyToItaKey(key)
-            case "VIEW_MISSION_PROGRESS":   this.keys.viewMissionProgress := this.wfKeyToItaKey(key)
-            case "VIEW_QUICK_PROGRESS":     this.keys.quickMissionProgress := this.wfKeyToItaKey(key)
-            case "SELECT_SUB_GEAR_0":       this.keys.subGears[1] := this.wfKeyToItaKey(key)
-            case "SELECT_SUB_GEAR_1":       this.keys.subGears[2] := this.wfKeyToItaKey(key)
-            case "SELECT_SUB_GEAR_2":       this.keys.subGears[3] := this.wfKeyToItaKey(key)
+            case "PRE_ATTACK":              this.keys.fireWeapon := this.wfKeyToKey(key)
+            case "AIM_WEAPON":              this.keys.aimWeapon := this.wfKeyToKey(key)
+            case "SECONDARY_FIRE":          this.keys.secondaryFire := this.wfKeyToKey(key)
+            case "RELOAD":                  this.keys.reload := this.wfKeyToKey(key)
+            case "CROUCH":                  this.keys.crouchToggle := this.wfKeyToKey(key)
+            case "HOLD_CROUCH":             this.keys.crouchHold := this.wfKeyToKey(key)
+            case "PRE_RUN":                 this.keys.sprintRoll := this.wfKeyToKey(key)
+            case "RUN":                     this.keys.sprint := this.wfKeyToKey(key)
+            case "ACTION":                  this.keys.roll := this.wfKeyToKey(key)
+            case "USE":                     this.keys.use := this.wfKeyToKey(key)
+            case "MELEE":                   this.keys.meleeAttack := this.wfKeyToKey(key)
+            case "MELEE_CHANNEL":           this.keys.meleeAttackHeavy := this.wfKeyToKey(key)
+            case "NEXT_INV":                this.keys.switchWeapon := this.wfKeyToKey(key)
+            case "SWITCH_GUN":              this.keys.switchGun := this.wfKeyToKey(key)
+            case "MINI_INVENTORY_HOLD":     this.keys.gearWheel := this.wfKeyToKey(key)
+            case "TOGGLE_CHAT_WINDOW":      this.keys.chat := this.wfKeyToKey(key)
+            case "ACTIVATE_ABILITY_0":      this.keys.abilities[1] := this.wfKeyToKey(key)
+            case "ACTIVATE_ABILITY_1":      this.keys.abilities[2] := this.wfKeyToKey(key)
+            case "ACTIVATE_ABILITY_2":      this.keys.abilities[3] := this.wfKeyToKey(key)
+            case "ACTIVATE_ABILITY_3":      this.keys.abilities[4] := this.wfKeyToKey(key)
+            case "ACTIVATE_ABILITY_4":      this.keys.abilities[5] := this.wfKeyToKey(key)
+            case "CYCLE_POWER_NEXT":        this.keys.nextPower := this.wfKeyToKey(key)
+            case "CYCLE_POWER_PREV":        this.keys.previousPower := this.wfKeyToKey(key)
+            case "POWER_MODIFIER":          this.keys.useSelectedPower := this.wfKeyToKey(key)
+            case "SHOW_SECRET_1":           this.keys.placeMarker := this.wfKeyToKey(key)
+            case "REVERSE_CAMERA_OFFSET":   this.keys.reverseCamera := this.wfKeyToKey(key)
+            case "CYCLE_CAMERA_NEXT":       this.keys.spectateNextPlayer := this.wfKeyToKey(key)
+            case "CYCLE_CAMERA_PREV":       this.keys.spectatePreviousPlayer := this.wfKeyToKey(key)
+            case "VIEW_HUMAN_PLAYERS":      this.keys.showPlayerList := this.wfKeyToKey(key)
+            case "PUSH_TO_TALK":            this.keys.pushToTalk := this.wfKeyToKey(key)
+            case "INSPECT":                 this.keys.inspect := this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_0":           this.keys.gears[1]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_1":           this.keys.gears[2]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_2":           this.keys.gears[3]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_3":           this.keys.gears[4]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_4":           this.keys.gears[5]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_5":           this.keys.gears[6]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_6":           this.keys.gears[7]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_7":           this.keys.gears[8]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_8":           this.keys.gears[9]:= this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_9":           this.keys.gears[10] := this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_10":          this.keys.gears[11] := this.wfKeyToKey(key)
+            case "GEAR_HOTKEY_11":          this.keys.gears[12] := this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_0":          this.keys.emotes[1]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_1":          this.keys.emotes[2]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_2":          this.keys.emotes[3]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_3":          this.keys.emotes[4]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_4":          this.keys.emotes[5]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_5":          this.keys.emotes[6]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_6":          this.keys.emotes[7]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_7":          this.keys.emotes[8]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_8":          this.keys.emotes[9]:= this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_9":          this.keys.emotes[10] := this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_10":         this.keys.emotes[11] := this.wfKeyToKey(key)
+            case "EMOTE_HOTKEY_11":         this.keys.emotes[12] := this.wfKeyToKey(key)
+            case "SHOW_LEVEL_MAP":          this.keys.showLevelMap := this.wfKeyToKey(key)
+            case "VIEW_MISSION_PROGRESS":   this.keys.viewMissionProgress := this.wfKeyToKey(key)
+            case "VIEW_QUICK_PROGRESS":     this.keys.quickMissionProgress := this.wfKeyToKey(key)
+            case "SELECT_SUB_GEAR_0":       this.keys.subGears[1] := this.wfKeyToKey(key)
+            case "SELECT_SUB_GEAR_1":       this.keys.subGears[2] := this.wfKeyToKey(key)
+            case "SELECT_SUB_GEAR_2":       this.keys.subGears[3] := this.wfKeyToKey(key)
 
             
             
             
-            case "LEAN_LEFT":               this.keys.railjackBankLeft := this.wfKeyToItaKey(key)
-            case "LEAN_RIGHT":              this.keys.railjackBankRight := this.wfKeyToItaKey(key)
-            case "VIEW_RAILJACK_SYSTEMS":   this.keys.railjackTacticalMenu := this.wfKeyToItaKey(key)
-            case "TOGGLE_RAILJACK_CAMERA":  this.keys.railjackRailjackCamera := this.wfKeyToItaKey(key)
+            case "LEAN_LEFT":               this.keys.railjackBankLeft := this.wfKeyToKey(key)
+            case "LEAN_RIGHT":              this.keys.railjackBankRight := this.wfKeyToKey(key)
+            case "VIEW_RAILJACK_SYSTEMS":   this.keys.railjackTacticalMenu := this.wfKeyToKey(key)
+            case "TOGGLE_RAILJACK_CAMERA":  this.keys.railjackRailjackCamera := this.wfKeyToKey(key)
         }
     }
 
-    wfKeyToItaKey(key = "") {
+    wfKeyToKey(key = "") {
         switch key
         {
 
-            case "EN_GRAVE":    return "\"
-            case "EN_1":        return "1"
-            case "EN_2":        return "2"
-            case "EN_3":        return "3"
-            case "EN_4":        return "4"
-            case "EN_5":        return "5"
-            case "EN_6":        return "6"
-            case "EN_7":        return "7"
-            case "EN_8":        return "8"
-            case "EN_9":        return "9"
-            case "EN_0":        return "0"
-            case "EN_MINUS":    return "'"
-            case "EN_EQUALS":   return "ì"
+            case "EN_GRAVE":    return "sc029"
+            case "EN_1":        return "sc002"
+            case "EN_2":        return "sc003"
+            case "EN_3":        return "sc004"
+            case "EN_4":        return "sc005"
+            case "EN_5":        return "sc006"
+            case "EN_6":        return "sc007"
+            case "EN_7":        return "sc008"
+            case "EN_8":        return "sc009"
+            case "EN_9":        return "sc00A"
+            case "EN_0":        return "sc00B"
+            case "EN_MINUS":    return "sc00C"
+            case "EN_EQUALS":   return "sc00D"
             ;--------------------------------
-            case "EN_Q":        return "q"
-            case "EN_W":        return "w"
-            case "EN_E":        return "e"
-            case "EN_R":        return "r"
-            case "EN_T":        return "t"
-            case "EN_Y":        return "y"
-            case "EN_U":        return "u"
-            case "EN_I":        return "i"
-            case "EN_O":        return "o"
-            case "EN_P":        return "P"
+            case "EN_Q":        return "sc010"
+            case "EN_W":        return "sc011"
+            case "EN_E":        return "sc012"
+            case "EN_R":        return "sc013"
+            case "EN_T":        return "sc014"
+            case "EN_Y":        return "sc015"
+            case "EN_U":        return "sc016"
+            case "EN_I":        return "sc017"
+            case "EN_O":        return "sc018"
+            case "EN_P":        return "sc019"
 
-            case "EN_LBRACKET": return "è"
-            case "EN_RBRACKET": return "+"
+            case "EN_LBRACKET": return "sc01A"
+            case "EN_RBRACKET": return "sc01B"
             ;--------------------------------
-            case "EN_A":        return "a"
-            case "EN_S":        return "s"
-            case "EN_D":        return "d"
-            case "EN_F":        return "f"
-            case "EN_G":        return "g"
-            case "EN_H":        return "h"
-            case "EN_J":        return "j"
-            case "EN_K":        return "k"
-            case "EN_L":        return "l"
+            case "EN_A":        return "sc01E"
+            case "EN_S":        return "sc01F"
+            case "EN_D":        return "sc020"
+            case "EN_F":        return "sc021"
+            case "EN_G":        return "sc022"
+            case "EN_H":        return "sc023"
+            case "EN_J":        return "sc024"
+            case "EN_K":        return "sc025"
+            case "EN_L":        return "sc026"
 
-            case "EN_SEMICOLON": return "ò"
-            case "EN_APOSTROPHE": return "à"
-            case "EN_BACKSLASH": return "ù"
+            case "EN_SEMICOLON": return "sc027"
+            case "EN_APOSTROPHE": return "sc028"
+            case "EN_BACKSLASH": return "sc02B"
             ;--------------------------------
-            case "EN_LSHIFT":   return "LShift"
+            case "EN_LSHIFT":   return "sc02A"
 
-            case "EN_Z":        return "z"
-            case "EN_X":        return "x"
-            case "EN_C":        return "c"
-            case "EN_V":        return "v"
-            case "EN_B":        return "b"
-            case "EN_N":        return "n"
-            case "EN_M":        return "m"
+            case "EN_Z":        return "sc02C"
+            case "EN_X":        return "sc02D"
+            case "EN_C":        return "sc02E"
+            case "EN_V":        return "sc02F"
+            case "EN_B":        return "sc030"
+            case "EN_N":        return "sc031"
+            case "EN_M":        return "sc032"
 
-            case "EN_COMMA":    return ","
-            case "EN_PERIOD":   return "."
-            case "EN_SLASH":    return "-"
-            case "EN_RSHIFT":   return "RShift"
+            case "EN_COMMA":    return "sc033"
+            case "EN_PERIOD":   return "sc034"
+            case "EN_SLASH":    return "sc035"
+            case "EN_RSHIFT":   return "sc136"
             ;--------------------------------
-            case "EN_LCONTROL": return "LCltr"
-            case "EN_LALT":     return "LAlt"
-            case "EN_SPACE":    return "Space"
-            case "EN_RALT":     return "RAlt"
-            case "EN_RCONTROL": return "RCltr"
+            case "EN_LCONTROL": return "sc01D"
+            case "EN_LALT":     return "sc038"
+            case "EN_SPACE":    return "sc039"
+            case "EN_RALT":     return "sc138"
+            case "EN_RCONTROL": return "sc11D"
             ;--------------------------------
-            case "EN_UP":       return "Up"
-            case "EN_LEFT":     return "Left"
-            case "EN_RIGHT":    return "Right"
-            case "EN_DOWN":     return "Down"
+            case "EN_UP":       return "sc148"
+            case "EN_LEFT":     return "sc14B"
+            case "EN_RIGHT":    return "sc14D"
+            case "EN_DOWN":     return "sc150"
             ;--------------------------------
-            case "EN_KP_DIVIDE": return "NumpadDiv"
-            case "EN_KP_MULTIPLY":   return "NumpadMult"
+            case "EN_KP_DIVIDE": return "sc135"
+            case "EN_KP_MULTIPLY":   return "sc037"
+            case "EN_KP_SUBTRACT":   return "sc04A"
+            case "EN_KP_ADD":   return "sc04E"
 
-            case "EN_KP_7":     return "Numpad7"
-            case "EN_KP_8":     return "Numpad8"
-            case "EN_KP_9":     return "Numpad9"
+            case "EN_KP_7":     return "sc047"
+            case "EN_KP_8":     return "sc048"
+            case "EN_KP_9":     return "sc049"
 
-            case "EN_KP_4":     return "Numpad4"
-            case "EN_KP_5":     return "Numpad5"
-            case "EN_KP_6":     return "Numpad6"
+            case "EN_KP_4":     return "sc04B"
+            case "EN_KP_5":     return "sc04C"
+            case "EN_KP_6":     return "sc04D"
 
-            case "EN_KP_1":     return "Numpad1"
-            case "EN_KP_2":     return "Numpad2"
-            case "EN_KP_3":     return "Numpad3"
+            case "EN_KP_1":     return "sc04F"
+            case "EN_KP_2":     return "sc050"
+            case "EN_KP_3":     return "sc051"
 
-            case "EN_KP_0":     return "Numpad0"
-            case "EN_KP_DECIMAL":    return "NumpadDot"
+            case "EN_KP_0":     return "sc052"
+            case "EN_KP_DECIMAL":    return "sc053"
             ;--------------------------------
             case "EN_MOUSE_B0": return "LButton"
             case "EN_MOUSE_B1": return "RButton"

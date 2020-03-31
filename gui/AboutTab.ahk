@@ -4,17 +4,31 @@ class AboutTab {
     createGui() {
         guiControl, text, % Gui.controls.tabs, % "About"
 
-        ; - - - .:| Adding controls to gui |:. - - -
         gui, % Gui.hwnd ":tab", % "About"
 
-        gui, % Gui.hwnd ":add", text, % "x12 y40 hwnd" "aboutLabel", % "Hi there"
-        ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        gui, % Gui.hwnd ":add", picture, % "x10 y12", % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\icon.png"
 
-        ; - - - .:| Storing controls hwnd |:. - - -
-        this.controls.aboutLabel := aboutLabel
-        ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        gui, % Gui.hwnd ":font", % "s14 w500"
+        gui, % Gui.hwnd ":add", text, % "x+14 yp20", % "Warframe Lazy"
+        gui, % Gui.hwnd ":font", % "s10 w350"
+        gui, % Gui.hwnd ":add", text, % "y+4", % "Version " MacroValues.release "." MacroValues.version "." MacroValues.revision
+        gui, font
+        gui, % Gui.hwnd ":add", button, % "y+4 hwnd" "changelogButton", % "What's new?"
 
-        ; - - - .:| Including and binding functions to controls |:. - - -
-        ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+
+        gui, % Gui.hwnd ":add", picture, % "x10 y" Gui.properties.height - 75, % substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\Ylantron.png"
+
+        gui, font, % "s11 w100"
+        gui, % Gui.hwnd ":add", text, % "x+10 yp12", % "By Ylan Anderson"
+        gui, font
+
+        ; - - - - - - - - - -
+
+        this.controls.changelogButton := changelogButton
+
+        ; - - - - - - - - - -
+
+        About.include()
     }
 }

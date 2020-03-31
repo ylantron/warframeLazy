@@ -3,35 +3,39 @@
 #include %A_ScriptDir%/gui/StatusBar.ahk
 #include %A_ScriptDir%/gui/FunctionsTab.ahk
 #include %A_ScriptDir%/gui/AutomaticAbilitiesTab.ahk
+#include %A_ScriptDir%/gui/AutomaticChatTab.ahk
 #include %A_ScriptDir%/gui/SettingsTab.ahk
-;#include %A_ScriptDir%/gui/AboutTab.ahk
+#include %A_ScriptDir%/gui/AboutTab.ahk
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #include %A_ScriptDir%/functions/functions/SlideAttack.ahk
 #include %A_ScriptDir%/functions/functions/FireMode.ahk
 #include %A_ScriptDir%/functions/functions/UseKeyBehaviour.ahk
 #include %A_ScriptDir%/functions/functions/QuickAbilityUse.ahk
 #include %A_ScriptDir%/functions/automaticAbilities/AutomaticAbilities.ahk
+#include %A_ScriptDir%/functions/chat/AutomaticChat.ahk
 #include %A_ScriptDir%/functions/settings/Settings.ahk
+#include %A_ScriptDir%/functions/about/About.ahk
 #include %A_ScriptDir%/functions/ini/Ini.ahk
 
 class Gui {
     static hwnd
-    static properties := {width:350, height:220}
+    static properties := {width:350, height:245}
     static key := "capslock"
     static timeTimer
 
     static controls = {}
 
     createGui() {
-        gui, new, % "-resize -minimizeBox -MaximizeBox hwnd" "warframeLazyHwnd", % "Warframe Lazy (Ylan Anderson)"
+        gui, new, % "-resize -minimizeBox -MaximizeBox hwnd" "warframeLazyHwnd", % "Warframe Lazy"
         this.hwnd := warframeLazyHwnd
 
         gui, % this.hwnd ":add", tab3, % " w" Gui.properties.width " h" Gui.properties.height - 16 " x0 y0 hwnd" "tabs"
         this.controls.tabs := tabs
 
-        FunctionsTab.createGui()
-        AutomaticAbilitiesTab.createGui()
-        SettingsTab.createGui()
-        AboutTab.createGui()
+        ownedClasses := [FunctionsTab, AutomaticAbilitiesTab, AutomaticChatTab, SettingsTab, AboutTab]
+        loop, % ownedClasses.Length() {
+            ownedClasses[A_Index].createGui()
+        }
 
         gui, % this.hwnd ":tab"
 

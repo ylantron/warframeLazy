@@ -26,7 +26,7 @@ class Timer {
         this.sendKey := ObjBindMethod(this, "sendKeyTimer", this.functionParameter)
 
         if (autoStart = 1) {
-            this.startSendKey()
+            this.start()
         }
     }
 

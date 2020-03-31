@@ -18,13 +18,12 @@ class StatusBar {
     }
 
     getRandomPhrase() {
-        phrases := [    "2035"
-                    ,   "Did you really believe it would be this easy?"
-                    ,   "Hydroid Prime Trailer: coming soon(tm)"
-                    ,   """We rename 'warframes' in 'javelins'"" -cit Steve Sinclair"
-                    ,   "RIP raids"
-                    ,   "Tenno, on deck"
-                    ,   "They come to this place when they know they are not pure"]
+        phrases := []
+
+        loop, read, % Ini.pathRandomPhrases
+        {
+            phrases.Push(A_LoopReadLine)
+        }
 
         random, value, 1, % phrases.Length()
         return phrases[value]

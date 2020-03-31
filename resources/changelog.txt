@@ -1,0 +1,5 @@
+v1.1.0
+
+- Added "About" tab
+- Added "Automatic Chat" tab
+- Warframe Keys are now recognized with any keyboard loadout
