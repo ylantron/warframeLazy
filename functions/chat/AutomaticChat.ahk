@@ -66,8 +66,9 @@ class AutomaticChat {
 
             if (Control.getControlText(AutomaticChatTab.controls.messagesListbox) != "") { ; if an item of listbox is selected, enable edit button too
                 guiControl, enable1, % AutomaticChatTab.controls.editItemButton
+            } else {
+                guiControl, enable0, % AutomaticChatTab.controls.editItemButton
             }
-            ;
         } else { ; if textbox is not empty
             guiControl, enable0, % AutomaticChatTab.controls.addItemButton
             guiControl, enable0, % AutomaticChatTab.controls.editItemButton
@@ -156,14 +157,14 @@ class AutomaticChat {
         loop, % this.messagesListboxItems.Length() {
             if (Control.getControlText(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[A_Index]) {
                 this.messagesListboxItems.RemoveAt(A_Index)
-                guiControl, choose , % AutomaticChatTab.controls.messagesListbox, % "0"
-                preselectItem := this.messagesListboxItems[A_Index + 1]
+                preselectItem := this.messagesListboxItems[A_Index]
                 break
             }
         }
 
         this.refreshItems(preselectItem)
         this.changeListboxButtonsState()
+        this.changeAddEditButtonsState()
     }
 
     emptyList(confirmPrompt := 0) {
@@ -179,6 +180,7 @@ class AutomaticChat {
         this.messagesListboxItems := []
         fileDelete, % Ini.pathChat
         this.changeListboxButtonsState()
+        this.changeAddEditButtonsState()
     }
 
     refreshItems(preselectItem := "") {

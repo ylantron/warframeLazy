@@ -88,8 +88,8 @@ class UseKeyBehaviour {
                     sleep, 50
                 }
             case 2:
-                send % "{blind}" WarframeValues.keys.use
-                send % "{blind}" WarframeValues.keys.abilities[5]
+				send % "{blind}{" WarframeValues.keys.use "}"
+                send % "{blind}{" WarframeValues.keys.abilities[5] "}"
 
             case 3:
                 Send % "{Blind}{" WarframeValues.keys.use "}"

@@ -39,7 +39,7 @@ class Gui {
 
         gui, % this.hwnd ":tab"
 
-        Gui, % this.hwnd ":add", StatusBar,,
+        Gui, % this.hwnd ":add", StatusBar, % "hwnd" "statusbarControl",
         SB_SetParts(this.properties.width*.90)
         StatusBar.updateText()
 
@@ -47,10 +47,13 @@ class Gui {
 
         Ini.loadSettings()
 
+        function := ObjBindMethod(StatusBar, "updateText")
+        guiControl, % this.hwnd ":+g", % statusbarControl, % function
+
         ; handle window close
-        onWindowClose := ObjBindMethod(this, "onWindowClose")
-        OnMessage(0x112, onWindowClose)
-        onWindowClose := ""
+        function := ObjBindMethod(this, "onWindowClose")
+        OnMessage(0x112, function)
+        
 
         ; prevent window from moving
         hSysMenu:=DllCall("GetSystemMenu","Int", this.hwnd ,"Int",FALSE) 

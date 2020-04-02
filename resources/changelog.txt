@@ -1,5 +1,10 @@
 v1.1.0
-
 - Added "About" tab
 - Added "Automatic Chat" tab
 - Warframe Keys are now recognized with any keyboard loadout
+
+v1.1.1
+- Clicking on the Status Bar will refresh its text
+- Fixed some errors about using the "Store in Operator" Use Key Behaviour function
+- Fixed in "Automatic Chat" edit button still available if a message is deleted but no other messages are available
+- Added few new random phrases
