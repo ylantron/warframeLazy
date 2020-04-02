@@ -23,7 +23,7 @@ Gui.createGui()
 Gui.refreshValueLabels()
 Gui.enableHotkey()
 
-if (Control.getControlText(SettingsTab.controls.showWelcomeCheckbox)) {
+if (Control.getContent(SettingsTab.controls.showWelcomeCheckbox)) {
     Welcome.createGui()
     Welcome.showGui()
 }
