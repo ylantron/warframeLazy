@@ -40,8 +40,8 @@ class UseKeyBehaviour {
     }
 
     refreshValueLabel() {
-        guiControl, text, % this.valueLabel, % this.values[Control.getControlText(this.slider)]
-        iniWrite, % Control.getControlText(this.slider), % Ini.path, % this.className, % "value"
+        guiControl, text, % this.valueLabel, % this.values[Control.getContent(this.slider)]
+        iniWrite, % Control.getContent(this.slider), % Ini.path, % this.className, % "value"
     }
 
     setAction() {
@@ -81,7 +81,7 @@ class UseKeyBehaviour {
     }
 
     doAction() {
-        switch Control.getControlText(this.slider) {
+        switch Control.getContent(this.slider) {
             case 1:     
                 while getKeyState(this.key, "p") {
                     Send % "{Blind}{" WarframeValues.keys.use "}"

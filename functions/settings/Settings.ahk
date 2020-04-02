@@ -20,7 +20,7 @@ class Settings {
 
     changeKeys() {
         loop, % SettingsTab.keyControls.Length() {
-            guiControl, text, % SettingsTab.keyControls[A_Index], % StrReplace(Control.getControlText(SettingsTab.keyControls[A_Index]), " ", "")
+            guiControl, text, % SettingsTab.keyControls[A_Index], % StrReplace(Control.getContent(SettingsTab.keyControls[A_Index]), " ", "")
         }
 
         guiControl, enable0, % SettingsTab.controls.changeKeysButton
@@ -40,16 +40,16 @@ class Settings {
             currentClass := A_Index
 
             loop {
-                validity := this.checkKeyValidity(Control.getControlText(SettingsTab.keyControls[currentClass]))
+                validity := this.checkKeyValidity(Control.getContent(SettingsTab.keyControls[currentClass]))
 
                 if (validity != 1) {
-                    new Message("Error while setting key of " classesName[currentClass] " (" Control.getControlText(SettingsTab.keyControls[currentClass]) ")" "`nRestoring original key (" classes[currentClass].key ")")
+                    new Message("Error while setting key of " classesName[currentClass] " (" Control.getContent(SettingsTab.keyControls[currentClass]) ")" "`nRestoring original key (" classes[currentClass].key ")")
                     guiControl, text, % SettingsTab.keyControls[currentClass] , % classes[currentClass].key
                 }
             } until (validity = 1)
 
-            hotkey, % Control.getControlText(SettingsTab.keyControls[A_Index]), % checkKeysValidity, off
-            classes[A_Index].key := Control.getControlText(SettingsTab.keyControls[A_Index])
+            hotkey, % Control.getContent(SettingsTab.keyControls[A_Index]), % checkKeysValidity, off
+            classes[A_Index].key := Control.getContent(SettingsTab.keyControls[A_Index])
         }
     }
 
@@ -110,9 +110,9 @@ class Settings {
     }
 
     setCheckboxState(target := "") {
-        gui, % Gui.hwnd ": " (Control.getControlText(SettingsTab.controls.guiAlwaysOnTopCheckbox) ? "+" : "-") "alwaysOnTop"
+        gui, % Gui.hwnd ": " (Control.getContent(SettingsTab.controls.guiAlwaysOnTopCheckbox) ? "+" : "-") "alwaysOnTop"
 
-        if (!Control.getControlText(SettingsTab.controls.showEmailCheckbox)) {
+        if (!Control.getContent(SettingsTab.controls.showEmailCheckbox)) {
             guiControl, enable1, % SettingsTab.controls.showPhraseCheckbox
         } else {
             guiControl, enable0, % SettingsTab.controls.showPhraseCheckbox
@@ -122,9 +122,9 @@ class Settings {
             StatusBar.updateText()
         }
 
-        iniWrite, % Control.getControlText(SettingsTab.controls.guiAlwaysOnTopCheckbox), % Ini.path, % "Macro", % "alwaysOnTop"
-        iniWrite, % Control.getControlText(SettingsTab.controls.showEmailCheckbox), % Ini.path, % "Macro", % "showEmail"
-        iniWrite, % Control.getControlText(SettingsTab.controls.showPhraseCheckbox), % Ini.path, % "Macro", % "showRandomPhrases"
-        iniWrite, % Control.getControlText(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
+        iniWrite, % Control.getContent(SettingsTab.controls.guiAlwaysOnTopCheckbox), % Ini.path, % "Macro", % "alwaysOnTop"
+        iniWrite, % Control.getContent(SettingsTab.controls.showEmailCheckbox), % Ini.path, % "Macro", % "showEmail"
+        iniWrite, % Control.getContent(SettingsTab.controls.showPhraseCheckbox), % Ini.path, % "Macro", % "showRandomPhrases"
+        iniWrite, % Control.getContent(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
     }
 }
