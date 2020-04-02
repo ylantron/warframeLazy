@@ -65,9 +65,9 @@ class Welcome {
     }
 
     destroyGui(showMacro) {
-        if (Control.getContent(this.controls.hideWelcomeCheckbox)) {
+        if (Control.getControlText(this.controls.hideWelcomeCheckbox)) {
             guiControl, , % SettingsTab.controls.showWelcomeCheckbox, 0
-            iniWrite, % Control.getContent(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
+            iniWrite, % Control.getControlText(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
         }
 
         if (showMacro = 1) {

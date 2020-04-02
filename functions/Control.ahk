@@ -4,7 +4,7 @@ class Control {
         return value
     }
 
-    getContent(hwnd) {
+    getControlText(hwnd) {
         guiControlGet, value, , % hwnd
         return value
     }
