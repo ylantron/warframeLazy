@@ -1,3 +1,5 @@
+Gui.ownedClasses.Push(AutomaticAbilitiesTab)
+
 class AutomaticAbilitiesTab {
     static controls = {}
     static properties = { spacing:34 }

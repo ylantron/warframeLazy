@@ -1,10 +1,13 @@
+FunctionsTab.classes.Push(AutomaticMelee)
+
 class AutomaticMelee {
-    static className := "Automatic Melee"
+    static className := "Melee Fire Rate"
     static enabled := 0
     static key := "e"
     static values = ["Normal", "Automatic"]
 
     include() {
+        this.label := FunctionsTab.controls.autoMeleeLabel
         this.button := FunctionsTab.controls.autoMeleeButton
         this.valueLabel := FunctionsTab.controls.autoMeleeValueLabel
 
@@ -12,11 +15,18 @@ class AutomaticMelee {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd() , % function
+    }
+
+    tutorial() {
+        new Message("The ""Melee Fire Rate"" Function enables the use of automatic melee attacks with one button`nThis is useful for melee frames like Excalibur or Valkyr")
     }
 
     setState(state := "toggle") {

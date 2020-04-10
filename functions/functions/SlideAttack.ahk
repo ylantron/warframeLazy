@@ -1,3 +1,5 @@
+FunctionsTab.classes.Push(SlideAttack)
+
 class SlideAttack {
     static className := "Slide Attack"
     static enabled := 0
@@ -5,6 +7,7 @@ class SlideAttack {
     static values = ["Normal", "Automatic"]
 
     include() {
+        this.label := FunctionsTab.controls.slideAttackLabel
         this.button := FunctionsTab.controls.slideAttackButton
         this.valueLabel := FunctionsTab.controls.slideAttackValueLabel
 
@@ -12,11 +15,18 @@ class SlideAttack {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd() , % function
+    }
+
+    tutorial() {
+        new Message("The ""Slide Attack"" Function will enable the use of automatic slide attacks all with a button`nYou'll become a spinning wheel of death, eh?")
     }
 
     setState(state := "toggle") {

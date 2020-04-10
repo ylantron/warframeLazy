@@ -1,3 +1,5 @@
+FunctionsTab.classes.Push(UseKeyBehaviour)
+
 class UseKeyBehaviour {
     static className := "Use Key Behaviour"
     static enabled := 0
@@ -5,6 +7,7 @@ class UseKeyBehaviour {
     static values = ["Spammed", "Store in Operator", "Auto Cipher"]
 
     include() {
+        this.label := FunctionsTab.controls.useKeyBehaviourLabel
         this.button := FunctionsTab.controls.useKeyBehaviourButton
         this.slider := FunctionsTab.controls.useKeyBehaviourSlider
         this.valueLabel := FunctionsTab.controls.useKeyBehaviourValueLabel
@@ -13,11 +16,18 @@ class UseKeyBehaviour {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd(), % function
+    }
+
+    tutorial() {
+        new Message("The ""Use Key Behaviour"" Function enables the use of some special functions.`nFor istance the automatic use of a Cipher when starting an hack")
     }
 
     setState(state := "toggle") {

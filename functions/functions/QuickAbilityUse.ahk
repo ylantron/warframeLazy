@@ -1,3 +1,5 @@
+FunctionsTab.classes.Push(QuickAbilityUse)
+
 class QuickAbilityUse {
     static className := "Quick Ability Use"
     static enabled := 0
@@ -5,6 +7,7 @@ class QuickAbilityUse {
     static values = ["First Ability", "Second Ability", "Third Ability", "Fourth Ability", "Operator"]
 
     include() {
+        this.label := FunctionsTab.controls.quickAbilityUseLabel
         this.button := FunctionsTab.controls.quickAbilityUseButton
         this.slider := FunctionsTab.controls.quickAbilityUseSlider
         this.valueLabel := FunctionsTab.controls.quickAbilityUseValueLabel
@@ -13,11 +16,18 @@ class QuickAbilityUse {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd(), % function
+    }
+
+    tutorial() {
+        new Message("The ""Quick Ability Use"" Function remaps a key to use the selected ability.`nMay come in handy when you have to use a lot the first ability but you have to move a lot too")
     }
 
     setState(state := "toggle") {

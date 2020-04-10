@@ -1,3 +1,5 @@
+Gui.ownedClasses.Push(AboutTab)
+
 class AboutTab {
     static controls := {}
 

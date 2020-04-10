@@ -33,9 +33,14 @@ class Settings {
     }
 
     checkKeysValidity() {
-        classes := [Gui, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
-        classesName := ["Show/Hide Macro", "Slide Attack", "Fire Mode", "Automatic Melee", "Use Key Behaviour", "Quick Ability Use", "Custom Teleport"]
+        classes := [Gui]
+        classesName := ["Show/Hide Macro"]
 
+        loop, % FunctionsTab.classes.Length() {
+            classes.Push(FunctionsTab.classes[A_Index])
+            classesName.Push(FunctionsTab.classes[A_Index].className)
+        }
+        
         loop, % classes.Length() {
             currentClass := A_Index
 
@@ -70,7 +75,11 @@ class Settings {
     }
 
     loadSettings() {
-        classes := [Gui, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        classes := [Gui]
+
+        loop, % FunctionsTab.classes.Length() {
+            classes.Push(FunctionsTab.classes[A_Index])
+        }
 
         Loop, % SettingsTab.keyControls.Length() {
             SettingsTab.keyControls[A_Index].setText(classes[A_Index].key)

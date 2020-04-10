@@ -1,3 +1,5 @@
+FunctionsTab.classes.Push(CustomTeleport)
+
 class CustomTeleport {
     static className := "Custom Teleport"
     static enabled := 0
@@ -5,6 +7,7 @@ class CustomTeleport {
     static values = ["Disabled", "Enabled"]
 
     include() {
+        this.label := FunctionsTab.controls.customTeleportLabel
         this.button := FunctionsTab.controls.customTeleportButton
         this.valueLabel := FunctionsTab.controls.customTeleportValueLabel
 
@@ -12,11 +15,18 @@ class CustomTeleport {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd() , % function
+    }
+
+    tutorial() {
+        new Message("The ""Custom Teleport"" Function uses an exploit based on the last secure position.`nPlace the operator where you want to teleport, then from anywhere, jump in the air and press the key to teleport to the saved location`nWARNING: you can't use the operator if you plan to use this function and after teleporting you have to wait the cooldown for the /unstuck command")
     }
 
     setState(state := "toggle") {

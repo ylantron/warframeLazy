@@ -1,3 +1,5 @@
+Gui.ownedClasses.Push(AutomaticChatTab)
+
 class AutomaticChatTab {
     static controls := {}
 

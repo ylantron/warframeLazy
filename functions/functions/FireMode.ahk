@@ -1,3 +1,5 @@
+FunctionsTab.classes.Push(FireMode)
+
 class FireMode {
     static className := "Fire Mode"
     static enabled := 0
@@ -5,6 +7,7 @@ class FireMode {
     static values = ["Auto", "Burst 3", "Semi-auto"]
 
     include() {
+        this.label := FunctionsTab.controls.fireModeLabel
         this.button := FunctionsTab.controls.fireModeButton
         this.slider := FunctionsTab.controls.fireModeSlider
         this.valueLabel := FunctionsTab.controls.fireModeValueLabel
@@ -13,11 +16,18 @@ class FireMode {
     }
 
     bindFunctions() {
+        function := ObjBindMethod(this, "tutorial")
+        guiControl, % Gui.hwnd ":+g", % this.label.getHwnd(), % function
+
         function := ObjBindMethod(this, "setState", "toggle")
         guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
         guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd(), % function
+    }
+
+    tutorial() {
+        new Message("The ""Fire Mode"" Function can set special fire rates (for istance if you want a semi-automatic weapon to be full automatic)`nDue to these functions not be in sync with Warframe some inconsistent behaviour may be noticed (like the burst 3 mode won't work well on weapons with slow rate of fire")
     }
 
     setState(state := "toggle") {

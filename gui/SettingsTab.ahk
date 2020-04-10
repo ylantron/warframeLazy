@@ -1,3 +1,5 @@
+Gui.ownedClasses.Push(SettingsTab)
+
 class SettingsTab {
     static controls := {}
     static labelControls := []
@@ -19,7 +21,7 @@ class SettingsTab {
         gui, % Gui.hwnd ":add", text, % "xs0 yp" this.properties.spacing " hwnd" "fireModeKeyLabel", % "Fire Mode Key"
         gui, % Gui.hwnd ":add", edit, % "xp120 yp-4 w80 hwnd" "fireModeKeyTextbox", % FireMode.key
 
-        gui, % Gui.hwnd ":add", text, % "xs0 yp" this.properties.spacing " hwnd" "autoMeleeKeyLabel", % "Automatic Melee Key"
+        gui, % Gui.hwnd ":add", text, % "xs0 yp" this.properties.spacing " hwnd" "autoMeleeKeyLabel", % "Melee Fire Rate Key"
         gui, % Gui.hwnd ":add", edit, % "xp120 yp-4 w80 hwnd" "autoMeleeKeyTextbox", % AutomaticMelee.key
 
         gui, % Gui.hwnd ":add", text, % "xs0 yp" this.properties.spacing " hwnd" "useKeyBehaviourKeyLabel", % "Use Key Behaviour Key"

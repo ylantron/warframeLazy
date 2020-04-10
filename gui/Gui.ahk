@@ -28,6 +28,7 @@ class Gui {
     static timeTimer
 
     static controls = {}
+    static ownedClasses := []
 
     createGui() {
         gui, new, % "-resize -minimizeBox -MaximizeBox hwnd" "warframeLazyHwnd", % "Warframe Lazy"
@@ -36,9 +37,9 @@ class Gui {
         gui, % this.hwnd ":add", tab3, % " w" Gui.properties.width " h" Gui.properties.height - 16 " x0 y0 hwnd" "tabs"
         this.controls.tabs := tabs
 
-        ownedClasses := [FunctionsTab, AutomaticAbilitiesTab, AutomaticChatTab, SettingsTab, AboutTab]
-        loop, % ownedClasses.Length() {
-            ownedClasses[A_Index].createGui()
+        ;ownedClasses := [FunctionsTab, AutomaticAbilitiesTab, AutomaticChatTab, SettingsTab, AboutTab]
+        loop, % this.ownedClasses.Length() {
+            this.ownedClasses[A_Index].createGui()
         }
 
         gui, % this.hwnd ":tab"
@@ -103,10 +104,8 @@ class Gui {
     }
 
     refreshValueLabels() {
-        classes := [SlideAttack, FireMode, UseKeyBehaviour, QuickAbilityUse]
-
-        loop, % classes.Length() {
-            classes[A_Index].refreshValueLabel()
+        loop, % FunctionsTab.classes.Length() {
+            FunctionsTab.classes[A_Index].refreshValueLabel()
         }
     }
 
@@ -129,9 +128,6 @@ class Gui {
         
         hotkey, ifWinActive  ; release show hide key to everything else
         hotkey, % "+^" this.key, % showHideGui, off
-
-        showHideGui := ""
-        sendKey := ""
     }
 
     enableHotkey() {
@@ -155,9 +151,6 @@ class Gui {
 
         hotkey, ifWinActive  ; bind show hide key to everything else
         hotkey, % "+^" this.key, % showHideGuiObject, on
-
-        showHideGuiObject := ""
-        sendKeyObject := ""
     }
 
     sendKey(key) {
@@ -165,7 +158,12 @@ class Gui {
     }
 
     disableAllHotkeys() {
-        classes := [this, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        ;classes := [this, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+
+        loop, % FunctionsTab.classes.Length() {
+            classes.Push(FunctionsTab.classes[A_Index])
+        }
+
         loop, % classes.Length() {
             classes[A_Index].disableHotkeys()
         }
@@ -174,9 +172,9 @@ class Gui {
     enableAllHotkeys() {
         this.enableHotkey()
 
-        classes := [SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
-        loop, % classes.Length() {
-            classes[A_Index].setAction()
+        ;classes := [SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        loop, % FunctionsTab.classes.Length() {
+            FunctionsTab.classes[A_Index].setAction()
         }
     }
 

@@ -1,6 +1,10 @@
+Gui.ownedClasses.Push(FunctionsTab)
+
 class FunctionsTab {
     static controls = {}
     static properties = { spacing:18 }
+    static classes := []
+    static classesName := []
 
     createGui() {
         guiControl, text, % Gui.controls.tabs, % "Functions"
@@ -73,10 +77,8 @@ class FunctionsTab {
     }
 
     include() {
-        classes := [SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
-
         loop, % this.classes.Length() {
-            classes[A_Index].include()
+            this.classes[A_Index].include()
         }
     }
 }

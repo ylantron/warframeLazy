@@ -4,5 +4,5 @@ v1.2.0
 - mouse now will automatically move within window for faster interaction
 - clicking on a function will now display a mini-tutorial
 - added a new random phrase
-- fixed auto sort in "Automatic Chat" having ERROR has text when no settings are saved
+- fixed auto sort checkbox in "Automatic Chat" having ERROR has text when no settings are saved
 - made several changes in the code
