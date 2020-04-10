@@ -22,9 +22,6 @@ class Welcome {
                     .   "write the character ""h""." "`n"
                     .   "To restore the original macro key function the combination ALT + Macro Key is used" "`n`n"
 
-                    ;.   "Settings of this macro are saved in the file ""warframeLazy.ini""" "`n"
-                    ;.   "Deleting it will risult in the loss of your saved settings" "`n`n"
-
                     .   "Although this macro can prevent invalid key to be bound to functions it will not prevent" "`n"
                     .   "some weird behaviour. If this is the case (or if the macro goes crazy) you can panic exit" "`n"
                     .   "using the combination CTRL + SHIFT + ALT + F12 (I know it's a long combination but it" "`n"
@@ -43,11 +40,11 @@ class Welcome {
         gui, % this.hwnd ":add", button, % "xp106 yp0 w60 h30 hwnd" "okButton", % "OK"
 
         ; - - - - - - -
-        this.controls.welcomeTextLabel := welcomeTextLabel
+        this.controls.welcomeTextLabel := new Label(welcomeTextLabel)
 
-        this.controls.hideWelcomeCheckbox := hideWelcomeCheckbox
-        this.controls.showMacroButton := showMacroButton
-        this.controls.okButton := okButton
+        this.controls.hideWelcomeCheckbox := new Checkbox(hideWelcomeCheckbox)
+        this.controls.showMacroButton := new Button(showMacroButton)
+        this.controls.okButton := new Button(okButton)
         ; - - - - - - -
         this.bindFunctions()
     }
@@ -58,19 +55,18 @@ class Welcome {
 
     bindFunctions() {
         function := ObjBindMethod(this, "destroyGui", "1")
-        guiControl, % this.hwnd ":+g", % this.controls.showMacroButton, % function
+        guiControl, % this.hwnd ":+g", % this.controls.showMacroButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "destroyGui", "0")
-        guiControl, % this.hwnd ":+g", % this.controls.okButton, % function
+        guiControl, % this.hwnd ":+g", % this.controls.okButton.getHwnd(), % function
+
+        function := ObjBindMethod(this, "checkboxAction")
+        guiControl, % this.hwnd ":+g", % this.controls.hideWelcomeCheckbox.getHwnd(), % function
     }
 
     destroyGui(showMacro) {
-        if (Control.getContent(this.controls.hideWelcomeCheckbox)) {
-            guiControl, , % SettingsTab.controls.showWelcomeCheckbox, 0
-            iniWrite, % Control.getContent(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
-        }
-
-        if (showMacro = 1) {
+        if (    (showMacro = 1) 
+            AND !(winexist("ahk_id" Gui.hwnd) or winactive("ahk_id" Gui.hwnd))){
             Gui.showHideGui()
         }
 
@@ -78,5 +74,10 @@ class Welcome {
         this.hwnd := ""
         this.properties := ""
         this.controls := ""
+    }
+
+    checkboxAction() {
+        SettingsTab.controls.showWelcomeCheckbox.setCheck(!this.controls.hideWelcomeCheckbox.getContent())
+        iniWrite, % SettingsTab.controls.showWelcomeCheckbox.getContent(), % Ini.path, % "Macro", % "showWelcome"
     }
 }

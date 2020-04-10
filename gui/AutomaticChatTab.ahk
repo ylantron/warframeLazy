@@ -28,21 +28,21 @@ class AutomaticChatTab {
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Storing controls hwnd |:. - - -
-        this.controls.infoButton := infoButton
-        this.controls.addEditItemTextbox := addEditItemTextbox
-        this.controls.addItemButton := addItemButton
-        this.controls.editItemButton := editItemButton
+        this.controls.infoButton := new Button(infoButton)
+        this.controls.addEditItemTextbox := new Textbox(addEditItemTextbox)
+        this.controls.addItemButton := new Button(addItemButton)
+        this.controls.editItemButton := new Button(editItemButton)
 
-        this.controls.messagesListbox := messagesListbox
+        this.controls.messagesListbox := new Listbox(messagesListbox)
 
-        this.controls.autoSortCheckbox := autoSortCheckbox
+        this.controls.autoSortCheckbox := new Checkbox(autoSortCheckbox)
 
-        this.controls.refreshItemsButton := refreshItemsButton
-        this.controls.moveUpItemButton := moveUpItemButton
-        this.controls.moveDownItemButton := moveDownItemButton
-        this.controls.deleteItemButton := deleteItemButton
-        this.controls.deleteItemsButton := deleteItemsButton
-        this.controls.startButton := startButton
+        this.controls.refreshItemsButton := new Button(refreshItemsButton)
+        this.controls.moveUpItemButton := new Button(moveUpItemButton)
+        this.controls.moveDownItemButton := new Button(moveDownItemButton)
+        this.controls.deleteItemButton := new Button(deleteItemButton)
+        this.controls.deleteItemsButton := new Button(deleteItemsButton)
+        this.controls.startButton := new Button(startButton)
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Including and binding functions to controls |:. - - -

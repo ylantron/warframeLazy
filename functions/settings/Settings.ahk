@@ -5,51 +5,51 @@ class Settings {
 
     bindFunctions() {
         function := ObjBindMethod(this, "changeKeys")
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.changeKeysButton, % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.changeKeysButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "setCheckboxState")
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.guiAlwaysOnTopCheckbox, % function
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showWelcomeCheckbox, % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.guiAlwaysOnTopCheckbox.getHwnd(), % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showWelcomeCheckbox.getHwnd(), % function
         
         function := ObjBindMethod(this, "setCheckboxState", "statusBar")
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showEmailCheckbox, % function
-        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showPhraseCheckbox, % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showEmailCheckbox.getHwnd(), % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showPhraseCheckbox.getHwnd(), % function
 
         function := ""
     }
 
     changeKeys() {
         loop, % SettingsTab.keyControls.Length() {
-            guiControl, text, % SettingsTab.keyControls[A_Index], % StrReplace(Control.getContent(SettingsTab.keyControls[A_Index]), " ", "")
+            SettingsTab.keyControls[A_Index].setText(StrReplace(SettingsTab.keyControls[A_Index].getContent(), " ", ""))
         }
 
-        guiControl, enable0, % SettingsTab.controls.changeKeysButton
+        SettingsTab.controls.changeKeysButton.setEnable("off")
 
         Gui.disableAllHotkeys()
         this.checkKeysValidity()
         Gui.enableAllHotkeys()
 
-        guiControl, enable1, % SettingsTab.controls.changeKeysButton
+        SettingsTab.controls.changeKeysButton.setEnable("on")
     }
 
     checkKeysValidity() {
-        classes := [Gui, SlideAttack, FireMode, UseKeyBehaviour, QuickAbilityUse]
-        classesName := ["Show/Hide Macro", "Slide Attack", "Fire Mode", "Use Key Behaviour", "Quick Ability Use"]
+        classes := [Gui, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        classesName := ["Show/Hide Macro", "Slide Attack", "Fire Mode", "Automatic Melee", "Use Key Behaviour", "Quick Ability Use", "Custom Teleport"]
 
         loop, % classes.Length() {
             currentClass := A_Index
 
             loop {
-                validity := this.checkKeyValidity(Control.getContent(SettingsTab.keyControls[currentClass]))
+                validity := this.checkKeyValidity(SettingsTab.keyControls[currentClass].getContent())
 
                 if (validity != 1) {
-                    new Message("Error while setting key of " classesName[currentClass] " (" Control.getContent(SettingsTab.keyControls[currentClass]) ")" "`nRestoring original key (" classes[currentClass].key ")")
-                    guiControl, text, % SettingsTab.keyControls[currentClass] , % classes[currentClass].key
+                    new Message("Error while setting key of " classesName[currentClass] " (" SettingsTab.keyControls[currentClass].getContent() ")" "`nRestoring original key (" classes[currentClass].key ")")
+                    SettingsTab.keyControls[currentClass].setText(classes[currentClass].key)
                 }
             } until (validity = 1)
 
-            hotkey, % Control.getContent(SettingsTab.keyControls[A_Index]), % checkKeysValidity, off
-            classes[A_Index].key := Control.getContent(SettingsTab.keyControls[A_Index])
+            hotkey, % SettingsTab.keyControls[A_Index].getContent(), % checkKeysValidity, off
+            classes[A_Index].key := SettingsTab.keyControls[A_Index].getContent()
         }
     }
 
@@ -70,10 +70,10 @@ class Settings {
     }
 
     loadSettings() {
-        classes := [Gui, SlideAttack, FireMode, UseKeyBehaviour, QuickAbilityUse]
+        classes := [Gui, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
 
         Loop, % SettingsTab.keyControls.Length() {
-            guiControl, text, % SettingsTab.keyControls[A_Index], % classes[A_Index].key
+            SettingsTab.keyControls[A_Index].setText(classes[A_Index].key)
         }
 
         ; - - - - - - - -
@@ -83,48 +83,48 @@ class Settings {
             iniWrite, % "0", % Ini.path, % "Macro", % "alwaysOnTop"
             valLoaded := 0
         }
-        guiControl, , % SettingsTab.controls.guiAlwaysOnTopCheckbox, % valLoaded
+        SettingsTab.controls.guiAlwaysOnTopCheckbox.setCheck(valLoaded)
 
         valLoaded := Ini.readIni("Macro", "showEmail")
         if !(valLoaded = 0 OR valLoaded = 1) {
             iniWrite, % "1", % Ini.path, % "Macro", % "showEmail"
             valLoaded := 1
         }
-        guiControl, , % SettingsTab.controls.showEmailCheckbox, % valLoaded
+        SettingsTab.controls.showEmailCheckbox.setCheck(valLoaded)
 
         valLoaded := Ini.readIni("Macro", "showRandomPhrases")
         if !(valLoaded = 0 OR valLoaded = 1) {
             iniWrite, % "1", % Ini.path, % "Macro", % "showRandomPhrases"
             valLoaded := 1
         }
-        guiControl, , % SettingsTab.controls.showPhraseCheckbox, % valLoaded
+        SettingsTab.controls.showPhraseCheckbox.setCheck(valLoaded)
 
         valLoaded := Ini.readIni("Macro", "showWelcome")
         if !(valLoaded = 0 OR valLoaded = 1) {
             iniWrite, % "1", % Ini.path, % "Macro", % "showWelcome"
             valLoaded := 1
         }
-        guiControl, , % SettingsTab.controls.showWelcomeCheckbox, % valLoaded
+        SettingsTab.controls.showWelcomeCheckbox.setCheck(valLoaded)
 
         this.setCheckboxState()
     }
 
     setCheckboxState(target := "") {
-        gui, % Gui.hwnd ": " (Control.getContent(SettingsTab.controls.guiAlwaysOnTopCheckbox) ? "+" : "-") "alwaysOnTop"
+        gui, % Gui.hwnd ": " (SettingsTab.controls.guiAlwaysOnTopCheckbox.getContent() ? "+" : "-") "alwaysOnTop"
 
-        if (!Control.getContent(SettingsTab.controls.showEmailCheckbox)) {
-            guiControl, enable1, % SettingsTab.controls.showPhraseCheckbox
+        if (!SettingsTab.controls.showEmailCheckbox.getContent()) {
+            SettingsTab.controls.showPhraseCheckbox.setEnable("on")
         } else {
-            guiControl, enable0, % SettingsTab.controls.showPhraseCheckbox
+            SettingsTab.controls.showPhraseCheckbox.setEnable("off")
         }
 
         if (target = "statusBar") {
             StatusBar.updateText()
         }
 
-        iniWrite, % Control.getContent(SettingsTab.controls.guiAlwaysOnTopCheckbox), % Ini.path, % "Macro", % "alwaysOnTop"
-        iniWrite, % Control.getContent(SettingsTab.controls.showEmailCheckbox), % Ini.path, % "Macro", % "showEmail"
-        iniWrite, % Control.getContent(SettingsTab.controls.showPhraseCheckbox), % Ini.path, % "Macro", % "showRandomPhrases"
-        iniWrite, % Control.getContent(SettingsTab.controls.showWelcomeCheckbox), % Ini.path, % "Macro", % "showWelcome"
+        iniWrite, % SettingsTab.controls.guiAlwaysOnTopCheckbox.getContent(), % Ini.path, % "Macro", % "alwaysOnTop"
+        iniWrite, % SettingsTab.controls.showEmailCheckbox.getContent(), % Ini.path, % "Macro", % "showEmail"
+        iniWrite, % SettingsTab.controls.showPhraseCheckbox.getContent(), % Ini.path, % "Macro", % "showRandomPhrases"
+        iniWrite, % SettingsTab.controls.showWelcomeCheckbox.getContent(), % Ini.path, % "Macro", % "showWelcome"
     }
 }

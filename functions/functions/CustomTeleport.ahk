@@ -1,12 +1,12 @@
-class SlideAttack {
-    static className := "Slide Attack"
+class CustomTeleport {
+    static className := "Custom Teleport"
     static enabled := 0
-    static key := "e"
-    static values = ["Normal", "Automatic"]
+    static key := "5"
+    static values = ["Disabled", "Enabled"]
 
     include() {
-        this.button := FunctionsTab.controls.slideAttackButton
-        this.valueLabel := FunctionsTab.controls.slideAttackValueLabel
+        this.button := FunctionsTab.controls.customTeleportButton
+        this.valueLabel := FunctionsTab.controls.customTeleportValueLabel
 
         this.bindFunctions()
     }
@@ -53,29 +53,42 @@ class SlideAttack {
 
     disableHotkeys() {
         function := ObjBindMethod(this, "doAction")
+        normalFunction := ObjBindMethod(this, "doActionNormal")
 
         hotkey, ifWinActive, ahk_exe Warframe.x64.exe
         hotkey, % "*" this.key, % function, off
+        hotkey, % "+" this.key, % normalFunction, off
 
         hotkey, ifWinActive, ahk_exe Warframe.exe
         hotkey, % "*" this.key, % function, off
-
-        function := ""
+        hotkey, % "+" this.key, % normalFunction, off
     }
 
     enableHotkeys() {
         function := ObjBindMethod(this, "doAction")
+        normalFunction := ObjBindMethod(this, "doActionNormal")
 
         hotkey, ifWinActive, ahk_exe Warframe.x64.exe
         hotkey, % "*" this.key, % function, on
+        hotkey, % "+" this.key, % normalFunction, on
 
         hotkey, ifWinActive, ahk_exe Warframe.exe
         hotkey, % "*" this.key, % function, on
+        hotkey, % "+" this.key, % normalFunction, on
     }
 
     doAction() {
-        Send, % "{Lctrl down}{" WarframeValues.keys.meleeAttack "}{lctrl up}"
+        Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
         sleep, 100
+        send, % "{" WarframeValues.keys.chat "}"
+        sleep, 100
+        send, % "/unstuck"
+        sleep, 100
+        send, % "{enter}"
+    }
+
+    doActionNormal() {
+        Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
     }
 
     loadSettings() {

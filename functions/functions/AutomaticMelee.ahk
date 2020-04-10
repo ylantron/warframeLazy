@@ -1,12 +1,12 @@
-class SlideAttack {
-    static className := "Slide Attack"
+class AutomaticMelee {
+    static className := "Automatic Melee"
     static enabled := 0
     static key := "e"
     static values = ["Normal", "Automatic"]
 
     include() {
-        this.button := FunctionsTab.controls.slideAttackButton
-        this.valueLabel := FunctionsTab.controls.slideAttackValueLabel
+        this.button := FunctionsTab.controls.autoMeleeButton
+        this.valueLabel := FunctionsTab.controls.autoMeleeValueLabel
 
         this.bindFunctions()
     }
@@ -74,8 +74,10 @@ class SlideAttack {
     }
 
     doAction() {
-        Send, % "{Lctrl down}{" WarframeValues.keys.meleeAttack "}{lctrl up}"
-        sleep, 100
+        while getKeyState(this.key, "p") {
+            Send % "{Blind}{" WarframeValues.keys.meleeAttack "}"
+            sleep, 50
+        }
     }
 
     loadSettings() {
@@ -88,7 +90,6 @@ class SlideAttack {
         valLoaded := Ini.readIni(this.className, "key")
         this.key := (Settings.checkKeyValidity(valLoaded) = 1 ? valLoaded : this.key)
 
-        
         this.setState(this.enabled)
     }
 }

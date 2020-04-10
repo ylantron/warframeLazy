@@ -5,7 +5,7 @@ class Ini {
     static pathRandomPhrases := substr(A_AppData, 1, strlen(A_AppData)-8) "\Local\warframeLazy\randomPhrases.dat"
 
     loadSettings() {
-        classes := [Gui, SlideAttack, FireMode, UseKeyBehaviour, QuickAbilityUse, AutomaticAbilities, AutomaticChat, Settings]
+        classes := [Gui, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport, AutomaticAbilities, AutomaticChat, Settings]
 
         loop, % classes.Length() {
             classes[A_Index].loadSettings()

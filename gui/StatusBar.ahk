@@ -7,10 +7,10 @@ class StatusBar {
     updateText() {
         gui, % Gui.hwnd ":default"
 
-        if (Control.getContent(SettingsTab.controls.showEmailCheckbox)) {
+        if (SettingsTab.controls.showEmailCheckbox.getContent()) {
             SB_SetText((WarframeValues.email != "" ? WarframeValues.email : "Last warframe account not found") ,1)
-        } else if ( (Control.getContent(SettingsTab.controls.showEmailCheckbox) = 0)
-                AND (Control.getContent(SettingsTab.controls.showPhraseCheckbox) = 1)) {
+        } else if ( (SettingsTab.controls.showEmailCheckbox.getContent() = 0)
+                AND (SettingsTab.controls.showPhraseCheckbox.getContent() = 1)) {
             SB_SetText(this.getRandomPhrase() ,1)
         } else {
             SB_SetText("" ,1)

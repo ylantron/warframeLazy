@@ -3,12 +3,15 @@ class AutomaticAbilities {
     static maxDelay := 9999
     static timeMax := 999000
     static className := "Automatic Abilities"
-    timers := []
+    static controlsName
+    static timers := []
 
     include() {
         loop, % AutomaticAbilitiesTab.modeControls.Length() { ; create timers
             this.timers[A_Index] := new Timer(1000, this, "sendKey", A_Index)
         }
+
+        this.controlsName := {textbox:1, updown:2, dropdownlist:3}
 
         this.bindFunctions()
     }
@@ -16,14 +19,14 @@ class AutomaticAbilities {
     bindFunctions() {
         loop, % AutomaticAbilitiesTab.modeControls.Length() { ; for every ability (5)
             function := ObjBindMethod(this, "setState", A_Index)
-            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.modeControls[A_Index], % function
+            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.modeControls[A_Index].getHwnd(), % function
+            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.automaticControls[A_Index].getControl(this.controlsName.textbox).getHwnd(), % function
+            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.repeatControls[A_Index].getControl(this.controlsName.textbox).getHwnd(), % function
+            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.textbox).getHwnd(), % function
+
 
             function := ObjBindMethod(this, "switchTime", A_Index)
-            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.timeControls[A_Index].timeDropDownList, % function
-
-            function := ObjBindMethod(this, "setAction", A_Index)
-            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.repeatControls[A_Index].repeatTextbox, % function
-            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.timeControls[A_Index].timeTextbox, % function
+            guiControl, % Gui.hwnd ":+g", % AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.dropdownlist).getHwnd(), % function
         }
 
 
@@ -31,26 +34,26 @@ class AutomaticAbilities {
     }
 
     setState(ability) {
-        switch Control.getContent(AutomaticAbilitiesTab.modeControls[ability]) { ; mode selection
+        switch AutomaticAbilitiesTab.modeControls[ability].getContent() { ; mode selection
             case 1: ; 1 disabled
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.automaticControls[ability]), AutomaticAbilitiesTab.automaticControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.repeatControls[ability]), AutomaticAbilitiesTab.repeatControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.timeControls[ability]), AutomaticAbilitiesTab.timeControls[ability], "off")
+                AutomaticAbilitiesTab.automaticControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.repeatControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.timeControls[ability].setVisibility("off")
 
             case 2: ; automatic
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.automaticControls[ability]), AutomaticAbilitiesTab.automaticControls[ability], "on")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.repeatControls[ability]), AutomaticAbilitiesTab.repeatControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.timeControls[ability]), AutomaticAbilitiesTab.timeControls[ability], "off")
+                AutomaticAbilitiesTab.automaticControls[ability].setVisibility("on")
+                AutomaticAbilitiesTab.repeatControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.timeControls[ability].setVisibility("off")
             
             case 3: ; 3 repeated
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.automaticControls[ability]), AutomaticAbilitiesTab.automaticControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.repeatControls[ability]), AutomaticAbilitiesTab.repeatControls[ability], "on")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.timeControls[ability]), AutomaticAbilitiesTab.timeControls[ability], "off")
+                AutomaticAbilitiesTab.automaticControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.repeatControls[ability].setVisibility("on")
+                AutomaticAbilitiesTab.timeControls[ability].setVisibility("off")
 
             case 4, case 5: ; 4 timed, 5 delayed
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.automaticControls[ability]), AutomaticAbilitiesTab.automaticControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.repeatControls[ability]), AutomaticAbilitiesTab.repeatControls[ability], "off")
-                Control.setVisibilities(Object.getLength(AutomaticAbilitiesTab.timeControls[ability]), AutomaticAbilitiesTab.timeControls[ability], "on")
+                AutomaticAbilitiesTab.automaticControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.repeatControls[ability].setVisibility("off")
+                AutomaticAbilitiesTab.timeControls[ability].setVisibility("on")
         }
 
         ; - - - - - - - - - - -
@@ -63,12 +66,12 @@ class AutomaticAbilities {
             case 4: iniKey := "fourth"
             case 5: iniKey := "operator"
         }
-        ;new Message(Control.getContent(AutomaticAbilitiesTab.modeControls[ability]) "`n" Ini.path "`n" this.className "`n" iniKey "AbilityMode")
-        iniWrite, % Control.getContent(AutomaticAbilitiesTab.modeControls[ability]), % Ini.path, % this.className, % iniKey "AbilityMode"
-        iniWrite, % Control.getContent(AutomaticAbilitiesTab.automaticControls[ability].automaticUpDown), % Ini.path, % this.className, % iniKey "AbilityAutomaticDelay"
-        iniWrite, % Control.getContent(AutomaticAbilitiesTab.repeatControls[ability].repeatUpDown), % Ini.path, % this.className, % iniKey "AbilityRepeatCount"
-        iniWrite, % Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeDropDownList), % Ini.path, % this.className, % iniKey "AbilityTimeMode"
-        iniWrite, % Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown), % Ini.path, % this.className, % iniKey "AbilityTime"
+
+        iniWrite, % AutomaticAbilitiesTab.modeControls[ability].getContent(), % Ini.path, % this.className, % iniKey "AbilityMode"
+        iniWrite, % AutomaticAbilitiesTab.automaticControls[ability].getControl(this.controlsName.updown).getContent(), % Ini.path, % this.className, % iniKey "AbilityAutomaticDelay"
+        iniWrite, % AutomaticAbilitiesTab.repeatControls[ability].getControl(this.controlsName.updown).getContent(), % Ini.path, % this.className, % iniKey "AbilityRepeatCount"
+        iniWrite, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.dropdownlist).getContent(), % Ini.path, % this.className, % iniKey "AbilityTimeMode"
+        iniWrite, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getContent(), % Ini.path, % this.className, % iniKey "AbilityTime"
 
         ; - - - - - - - - - - -
 
@@ -76,18 +79,18 @@ class AutomaticAbilities {
     }
 
     switchTime(ability) {
-        switch Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeDropDownList) {
+        switch AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.dropdownlist).getContent() {
             case 1: ; milliseconds (first expand range and limit, then change value)
-                guiControl, % "+range1-" this.timeMax, % AutomaticAbilitiesTab.timeControls[ability].timeUpDown
-                guiControl, +limit6, % AutomaticAbilitiesTab.timeControls[ability].timeTextbox
+                guiControl, % "+range1-" this.timeMax, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getHwnd() ;AutomaticAbilitiesTab.timeControls[ability].timeUpDown
+                guiControl, +limit6, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.textbox).getHwnd() ;AutomaticAbilitiesTab.timeControls[ability].timeTextbox
 
-                guiControl, text, % AutomaticAbilitiesTab.timeControls[ability].timeUpDown, % Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) * 1000
+                AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).setText(AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName["updown"]).getContent() * 1000)
 
             case 2: ; seconds (first change value, then reduce range and limit)
-                guiControl, text, % AutomaticAbilitiesTab.timeControls[ability].timeUpDown, % Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) / 1000
+                AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).setText(AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName["updown"]).getContent() / 1000)
 
-                guiControl, % "+range1-" this.timeMax/1000, % AutomaticAbilitiesTab.timeControls[ability].timeUpDown
-                guiControl, +limit3, % AutomaticAbilitiesTab.timeControls[ability].timeTextbox
+                guiControl, % "+range1-" this.timeMax/1000, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getHwnd()  ;AutomaticAbilitiesTab.timeControls[ability].timeUpDown
+                guiControl, +limit3, % AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.textbox).getHwnd() ;AutomaticAbilitiesTab.timeControls[ability].timeTextbox
         }
 
         this.setState(ability)
@@ -106,7 +109,7 @@ class AutomaticAbilities {
         ; stop timer
         this.timers[ability].stop()
 
-        if (Control.getContent(AutomaticAbilitiesTab.modeControls[ability]) = 1) { ; if disabled
+        if (AutomaticAbilitiesTab.modeControls[ability].getContent() = 1) { ; if disabled
             return
         }
 
@@ -120,28 +123,33 @@ class AutomaticAbilities {
     }
 
     doAction(ability) {
-        switch Control.getContent(AutomaticAbilitiesTab.modeControls[ability]) {
+        switch AutomaticAbilitiesTab.modeControls[ability].getContent() {
             case 2: ; automatic
                 while (GetKeyState(WarframeValues.keys.abilities[ability], "P")) {
                     this.sendKey(ability)
-                    sleep % Control.getContent(AutomaticAbilitiesTab.automaticControls[ability].automaticUpDown)
+                    sleep % AutomaticAbilitiesTab.automaticControls[ability].getControl(this.controlsName.updown).getContent()
                 }
 
             case 3: ; repeated
-                loop, % Control.getContent(AutomaticAbilitiesTab.repeatControls[ability].repeatUpDown) {
+                loop, % AutomaticAbilitiesTab.repeatControls[ability].getControl(this.controlsName.updown).getContent() { ;Control.getContent(AutomaticAbilitiesTab.repeatControls[ability].repeatUpDown) {
                     this.sendKey(ability)
                 }
 
             case 4: ; timed
                 if (!this.timers[ability].isActive()) {
-                    this.timers[ability].changeTime(Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeDropDownList) = 1 ? Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) : Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) * 1000)
+                    this.timers[ability].changeTime(AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.dropdownlist).getContent() = 1
+                                                    ? AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getContent()
+                                                    : AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getContent() * 1000)
+                    
                     this.sendKey(ability)
                 }
 
                 this.timers[ability].toggle()
 
             case 5: ; delayed
-                new Timer((Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeDropDownList) = 1 ? Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) : Control.getContent(AutomaticAbilitiesTab.timeControls[ability].timeUpDown) * 1000) * -1, this, "sendKey", ability, 1)
+                new Timer(  (AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.dropdownlist).getContent() = 1
+                            ? AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getContent()
+                            : AutomaticAbilitiesTab.timeControls[ability].getControl(this.controlsName.updown).getContent() * 1000) * -1, this, "sendKey", ability, 1)
 
              default:
                 msgbox % "Error! Function not programmed in automatic abilities"
@@ -168,7 +176,7 @@ class AutomaticAbilities {
                 iniWrite, % "1", % Ini.path, % this.className, % iniKey "AbilityMode"
                 valLoaded := 1
             }
-            guiControl, choose, % AutomaticAbilitiesTab.modeControls[A_Index], % valLoaded
+            AutomaticAbilitiesTab.modeControls[A_Index].setSelectedItem(valLoaded)
 
             
             valLoaded := Ini.readIni(this.className, iniKey "AbilityAutomaticDelay")
@@ -176,7 +184,7 @@ class AutomaticAbilities {
                 iniWrite, % "50", % Ini.path, % this.className, % iniKey "AbilityAutomaticDelay"
                 valLoaded := 50
             }
-            guiControl, text, % AutomaticAbilitiesTab.automaticControls[A_Index].automaticUpDown, % valLoaded
+            AutomaticAbilitiesTab.automaticControls[A_Index].getControl(this.controlsName.updown).setText(valLoaded)
 
 
             valLoaded := Ini.readIni(this.className, iniKey "AbilityRepeatCount")
@@ -184,7 +192,7 @@ class AutomaticAbilities {
                 iniWrite, % "2", % Ini.path, % this.className, % iniKey "AbilityRepeatCount"
                 valLoaded := 2
             }
-            guiControl, text, % AutomaticAbilitiesTab.repeatControls[A_Index].repeatUpDown, % valLoaded
+            AutomaticAbilitiesTab.repeatControls[A_Index].getControl(this.controlsName.updown).setText(valLoaded)
 
 
             timeModeLoaded := Ini.readIni(this.className, iniKey "AbilityTimeMode")
@@ -201,9 +209,9 @@ class AutomaticAbilities {
                 timeLoaded := (timeModeLoaded = 1 ? "1000" : "1")
             }
 
-            guiControl, choose, % AutomaticAbilitiesTab.timeControls[A_Index].timeDropDownList, % timeModeLoaded
+            AutomaticAbilitiesTab.modeControls[A_Index].getControl(this.controlsName.dropdownlist).setSelectedItem(timeModeLoaded) ;guiControl, choose, % AutomaticAbilitiesTab.timeControls[A_Index].timeDropDownList, % timeModeLoaded
             this.switchTime(A_Index)
-            guiControl, text, % AutomaticAbilitiesTab.timeControls[A_Index].timeUpDown, % timeLoaded
+            AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.updown).setText(timeLoaded) ;guiControl, text, % AutomaticAbilitiesTab.timeControls[A_Index].timeUpDown, % timeLoaded
 
             this.setState(A_Index)
         }

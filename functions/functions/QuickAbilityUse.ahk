@@ -14,10 +14,10 @@ class QuickAbilityUse {
 
     bindFunctions() {
         function := ObjBindMethod(this, "setState", "toggle")
-        guiControl, % Gui.hwnd ":+g", % this.button, % function
+        guiControl, % Gui.hwnd ":+g", % this.button.getHwnd(), % function
 
         function := ObjBindMethod(this, "refreshValueLabel")
-        guiControl, % Gui.hwnd ":+g", % this.slider, % function
+        guiControl, % Gui.hwnd ":+g", % this.slider.getHwnd(), % function
     }
 
     setState(state := "toggle") {
@@ -31,22 +31,19 @@ class QuickAbilityUse {
         }
         iniWrite, % this.enabled, % Ini.path, % this.className, % "enabled"
 
-        guiControl, text, % this.button, % (this.enabled ? "On" : "Off")
-        Gui, Font, % (this.enabled ? " cDefault " : " cGray ")
-        GuiControl, Font, % this.valueLabel
+        this.button.setText(this.enabled ? "On" : "Off")
+        this.valueLabel.setTextColor(this.enabled ? " cDefault " : " cGray ")
 
         this.refreshValueLabel()
         this.setAction()
     }
 
     refreshValueLabel() {
-        guiControl, text, % this.valueLabel, % this.values[Control.getContent(this.slider)]
-        iniWrite, % Control.getContent(this.slider), % Ini.path, % this.className, % "value"
+        this.valueLabel.setText(this.values[this.slider.getContent()])
+        iniWrite, % this.slider.getContent(), % Ini.path, % this.className, % "value"
     }
 
     setAction() {
-        function := ObjBindMethod(this, "doAction")
-
         if (this.enabled = 0) {
             this.disableHotkeys()
         } else {
@@ -57,38 +54,48 @@ class QuickAbilityUse {
     }
 
     disableHotkeys() {
-        function := ObjBindMethod(this, "doAction")
+        press := ObjBindMethod(this, "doAction")
+        release := ObjBindMethod(this, "doActionReleased")
 
         hotkey, ifWinActive, ahk_exe Warframe.x64.exe
-        hotkey, % "*" this.key, % function, off
+        hotkey, % "*" this.key, % press, off
+        hotkey, % "*" this.key " up", % release, off
 
         hotkey, ifWinActive, ahk_exe Warframe.exe
-        hotkey, % "*" this.key, % function, off
-
-        function := ""
+        hotkey, % "*" this.key, % press, off
+        hotkey, % "*" this.key " up", % release, off
     }
 
     enableHotkeys() {
-        function := ObjBindMethod(this, "doAction")
+        press := ObjBindMethod(this, "doAction")
+        release := ObjBindMethod(this, "doActionReleased")
 
         hotkey, ifWinActive, ahk_exe Warframe.x64.exe
-        hotkey, % "*" this.key, % function, on
+        hotkey, % "*" this.key, % press, on
+        hotkey, % "*" this.key " up", % release, on
 
         hotkey, ifWinActive, ahk_exe Warframe.exe
-        hotkey, % "*" this.key, % function, on
-
-        function := ""
+        hotkey, % "*" this.key, % press, on
+        hotkey, % "*" this.key " up", % release, on
     }
 
     doAction() {
-        Send, % "{Blind}{" WarframeValues.keys.abilities[Control.getContent(this.slider)] "}"
+        Send, % "{Blind}{" WarframeValues.keys.abilities[this.slider.getContent()] " DownR}"
+    }
+
+    doActionReleased() {
+        Send, % "{Blind}{" WarframeValues.keys.abilities[this.slider.getContent()] " Up}"
     }
 
     loadSettings() {
-        this.enabled := Ini.readIni(this.className, "enabled")
+        valLoaded := Ini.readIni(this.className, "enabled")
+        if !(valLoaded = 0 OR valLoaded = 1) {
+            valLoaded := 0
+        }
+        this.enabled := valLoaded
         
         valLoaded := Ini.readIni(this.className, "value")
-        guiControl, text, % this.slider, % (valLoaded < 1 OR valLoaded > this.values.Length() ? 1 : valLoaded)
+        this.slider.setText(valLoaded < 1 OR valLoaded > this.values.Length() ? 1 : valLoaded)
 
         valLoaded := Ini.readIni(this.className, "key")
         this.key := (Settings.checkKeyValidity(valLoaded) = 1 ? valLoaded : this.key)

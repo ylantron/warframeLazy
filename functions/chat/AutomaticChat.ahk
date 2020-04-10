@@ -13,40 +13,40 @@ class AutomaticChat {
 
     bindFunctions() {
         function := ObjBindMethod(this, "showInfo")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.infoButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.infoButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "changeAddEditButtonsState")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.addEditItemTextbox, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.addEditItemTextbox.getHwnd(), % function
 
         function := ObjBindMethod(this, "addItem", "")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.addItemButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.addItemButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "editItem", "")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.editItemButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.editItemButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "itemsListboxEvents")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.messagesListbox, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.messagesListbox.getHwnd(), % function
 
         function := ObjBindMethod(this, "sortCheckboxEvent")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.autoSortCheckbox, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.autoSortCheckbox.getHwnd(), % function
 
         function := ObjBindMethod(this, "readChatFile")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.refreshItemsButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.refreshItemsButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "moveItem", "up")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.moveUpItemButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.moveUpItemButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "moveItem", "down")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.moveDownItemButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.moveDownItemButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "deleteItem")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.deleteItemButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.deleteItemButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "emptyList", "1")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.deleteItemsButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.deleteItemsButton.getHwnd(), % function
 
         function := ObjBindMethod(this, "setAction", "1")
-        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.startButton, % function
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.startButton.getHwnd(), % function
     }
 
     showInfo() {
@@ -61,101 +61,101 @@ class AutomaticChat {
     }
 
     changeAddEditButtonsState() {
-        if (Control.getContent(AutomaticChatTab.controls.addEditItemTextbox) != "") {   ; if textbox is not empty
-            guiControl, enable1, % AutomaticChatTab.controls.addItemButton
+        if (AutomaticChatTab.controls.addEditItemTextbox.getContent() != "") {   ; if textbox is not empty
+            AutomaticChatTab.controls.addItemButton.setEnable("on")
 
-            if (Control.getContent(AutomaticChatTab.controls.messagesListbox) != "") { ; if an item of listbox is selected, enable edit button too
-                guiControl, enable1, % AutomaticChatTab.controls.editItemButton
+            if (AutomaticChatTab.controls.messagesListbox.getContent() != "") { ; if an item of listbox is selected, enable edit button too
+                AutomaticChatTab.controls.editItemButton.setEnable("on")
             } else {
-                guiControl, enable0, % AutomaticChatTab.controls.editItemButton
+                AutomaticChatTab.controls.editItemButton.setEnable("off")
             }
-        } else { ; if textbox is not empty
-            guiControl, enable0, % AutomaticChatTab.controls.addItemButton
-            guiControl, enable0, % AutomaticChatTab.controls.editItemButton
+        } else { ; if textbox is empty
+            AutomaticChatTab.controls.addItemButton.setEnable("off")
+            AutomaticChatTab.controls.editItemButton.setEnable("off")
         }
     }
 
     changeListboxButtonsState() {
         ; MOVE AND START BUTTONS HANDLING
-        if (Control.getContent(AutomaticChatTab.controls.autoSortCheckbox) = 1) { ; if sort checkbox is checked
-            guiControl, enable0, % AutomaticChatTab.controls.moveUpItemButton
-            guiControl, enable0, % AutomaticChatTab.controls.moveDownItemButton
+        if (AutomaticChatTab.controls.autoSortCheckbox.getContent() = 1) { ; if sort checkbox is checked
+            AutomaticChatTab.controls.moveUpItemButton.setEnable("off")
+            AutomaticChatTab.controls.moveDownItemButton.setEnable("off")
         } else { ; if sort checkbox is not checked
-            if (Control.getContent(AutomaticChatTab.controls.messagesListbox) != "") { ; if an item is selected
+            if (AutomaticChatTab.controls.messagesListbox.getContent() != "") { ; if an item is selected
                 if (this.messagesListboxItems.Length() = 1) { ; if there's only one item in the list
-                    guiControl, enable0, % AutomaticChatTab.controls.moveUpItemButton
-                    guiControl, enable0, % AutomaticChatTab.controls.moveDownItemButton
-                } else if (Control.getContent(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[1]) { ; if item selected is already first in the list
-                    guiControl, enable0, % AutomaticChatTab.controls.moveUpItemButton
-                    guiControl, enable1, % AutomaticChatTab.controls.moveDownItemButton
-                } else if (Control.getContent(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[this.messagesListboxItems.Length()]) { ; if item selected is already last in the list
-                    guiControl, enable1, % AutomaticChatTab.controls.moveUpItemButton
-                    guiControl, enable0, % AutomaticChatTab.controls.moveDownItemButton
+                    AutomaticChatTab.controls.moveUpItemButton.setEnable("off")
+                    AutomaticChatTab.controls.moveDownItemButton.setEnable("off")
+                } else if (AutomaticChatTab.controls.messagesListbox.getContent() = this.messagesListboxItems[1]) { ; if item selected is already first in the list
+                    AutomaticChatTab.controls.moveUpItemButton.setEnable("off")
+                    AutomaticChatTab.controls.moveDownItemButton.setEnable("on")
+                } else if (AutomaticChatTab.controls.messagesListbox.getContent() = this.messagesListboxItems[this.messagesListboxItems.Length()]) { ; if item selected is already last in the list
+                    AutomaticChatTab.controls.moveUpItemButton.setEnable("on")
+                    AutomaticChatTab.controls.moveDownItemButton.setEnable("off")
                 } else {
-                    guiControl, enable1, % AutomaticChatTab.controls.moveUpItemButton
-                    guiControl, enable1, % AutomaticChatTab.controls.moveDownItemButton
+                    AutomaticChatTab.controls.moveUpItemButton.setEnable("on")
+                    AutomaticChatTab.controls.moveDownItemButton.setEnable("on")
                 }
             } else { ; if an item is not selected
-                guiControl, enable0, % AutomaticChatTab.controls.moveUpItemButton
-                guiControl, enable0, % AutomaticChatTab.controls.moveDownItemButton
+                AutomaticChatTab.controls.moveUpItemButton.setEnable("off")
+                AutomaticChatTab.controls.moveDownItemButton.setEnable("off")
             }
         }
 
         ; DELETE BUTTONS HANDLING
         if (this.messagesListboxItems.Length() > 0) {
-            guiControl, % "enable" (Control.getContent(AutomaticChatTab.controls.messagesListbox) != "" ? 1 : 0), % AutomaticChatTab.controls.deleteItemButton
-            guiControl, enable1, % AutomaticChatTab.controls.deleteItemsButton
+            AutomaticChatTab.controls.deleteItemButton.setEnable(AutomaticChatTab.controls.messagesListbox.getContent() != "" ? 1 : 0)
+            AutomaticChatTab.controls.deleteItemsButton.setEnable("on")
         } else {
-            guiControl, enable0, % AutomaticChatTab.controls.deleteItemButton
-            guiControl, enable0, % AutomaticChatTab.controls.deleteItemsButton
+            AutomaticChatTab.controls.deleteItemButton.setEnable("off")
+            AutomaticChatTab.controls.deleteItemsButton.setEnable("off")
         }
 
         ; START BUTTON HANDLING
-        guiControl, % "enable" (Control.getContent(AutomaticChatTab.controls.messagesListbox) != "" ? 1 : 0), % AutomaticChatTab.controls.startButton
+        AutomaticChatTab.controls.startButton.setEnable(AutomaticChatTab.controls.messagesListbox.getContent() != "" ? 1 : 0)
     }
 
     addItem() {
-        item := Control.getContent(AutomaticChatTab.controls.addEditItemTextbox)
+        item := AutomaticChatTab.controls.addEditItemTextbox.getContent()
 
         for i, val in this.messagesListboxItems {
             if (item = val) { ; found a duplicate
-                guiControl, , % AutomaticChatTab.controls.addEditItemTextbox, % ""
-                guiControl, focus, % AutomaticChatTab.controls.addEditItemTextbox
+                AutomaticChatTab.controls.addEditItemTextbox.clear()
+                AutomaticChatTab.controls.addEditItemTextbox.setFocus()
                 return
             }
         }
 
         this.messagesListboxItems.Push(item)
 
-        if (Control.getContent(AutomaticChatTab.controls.autoSortCheckbox) = 1) { ; 
+        if (AutomaticChatTab.controls.autoSortCheckbox.getContent() = 1) { ; 
             this.messagesListboxItems := this.sortArray(this.messagesListboxItems)
         }
 
         this.refreshItems()
 
-        guiControl, , % AutomaticChatTab.controls.addEditItemTextbox, % ""
-        guiControl, focus, % AutomaticChatTab.controls.addEditItemTextbox
+        AutomaticChatTab.controls.addEditItemTextbox.clear()
+        AutomaticChatTab.controls.addEditItemTextbox.setFocus()
 
         this.changeListboxButtonsState()
     }
 
     editItem() {
         loop, % this.messagesListboxItems.Length() {
-            if (Control.getContent(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[A_Index]) {
-                this.messagesListboxItems[A_Index] := (item = "" ? Control.getContent(AutomaticChatTab.controls.addEditItemTextbox) : item)
+            if (AutomaticChatTab.controls.messagesListbox.getContent() = this.messagesListboxItems[A_Index]) {
+                this.messagesListboxItems[A_Index] := AutomaticChatTab.controls.addEditItemTextbox.getContent()
                 preselectItem :=  this.messagesListboxItems[A_Index]
-                continue
+                break
             }
         }
         this.refreshItems(preselectItem)
 
-        guiControl, , % AutomaticChatTab.controls.addEditItemTextbox, % ""
-        guiControl, focus, % AutomaticChatTab.controls.addEditItemTextbox
+        AutomaticChatTab.controls.addEditItemTextbox.clear()
+        AutomaticChatTab.controls.addEditItemTextbox.setFocus()
     }
 
     deleteItem(item) {
         loop, % this.messagesListboxItems.Length() {
-            if (Control.getContent(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[A_Index]) {
+            if (AutomaticChatTab.controls.messagesListbox.getContent() = this.messagesListboxItems[A_Index]) {
                 this.messagesListboxItems.RemoveAt(A_Index)
                 preselectItem := this.messagesListboxItems[A_Index]
                 break
@@ -176,7 +176,7 @@ class AutomaticChat {
             }
         }
 
-        guiControl, , % AutomaticChatTab.controls.messagesListbox, % "|"
+        AutomaticChatTab.controls.messagesListbox.clear()
         this.messagesListboxItems := []
         fileDelete, % Ini.pathChat
         this.changeListboxButtonsState()
@@ -192,15 +192,15 @@ class AutomaticChat {
             fileAppend, % this.messagesListboxItems[A_Index] "`n", % Ini.pathChat
         }
 
-        guiControl, , % AutomaticChatTab.controls.messagesListbox, % str
+        AutomaticChatTab.controls.messagesListbox.setContent(str)
     }
 
     itemsListboxEvents() {
         if (A_GuiControlEvent = "Normal") { ; if user clicked an item
             this.changeListboxButtonsState()
         } else if (A_GuiControlEvent = "DoubleClick") { ; if user double clicked an item
-            guiControl, , % AutomaticChatTab.controls.addEditItemTextbox, % Control.getContent(AutomaticChatTab.controls.messagesListbox)
-            guiControl, focus, % AutomaticChatTab.controls.addEditItemTextbox
+            AutomaticChatTab.controls.addEditItemTextbox.setContent(AutomaticChatTab.controls.messagesListbox.getContent())
+            AutomaticChatTab.controls.addEditItemTextbox.setFocus()
         }
     }
 
@@ -209,7 +209,7 @@ class AutomaticChat {
         tmp := ""
 
         loop, % this.messagesListboxItems.Length() {
-            if (Control.getContent(AutomaticChatTab.controls.messagesListbox) = this.messagesListboxItems[A_Index]) {
+            if (AutomaticChatTab.controls.messagesListbox.getContent() = this.messagesListboxItems[A_Index]) {
                 item := this.messagesListboxItems[A_Index]
                 if (direction = "up") {
                     tmp := this.messagesListboxItems[A_Index -1]
@@ -226,8 +226,8 @@ class AutomaticChat {
 
         this.refreshItems()
 
-        guiControl, chooseString, % AutomaticChatTab.controls.messagesListbox, % item
-        guiControl, focus, % AutomaticChatTab.controls.addEditItemTextbox
+        AutomaticChatTab.controls.messagesListbox.setSelectedItemByName(item)
+        AutomaticChatTab.controls.addEditItemTextbox.setFocus()
         this.changeListboxButtonsState()
     }
 
@@ -235,7 +235,7 @@ class AutomaticChat {
         this.sortArray(this.messagesListboxItems)
         this.refreshItems()
         this.changeListboxButtonsState()
-        iniWrite, % Control.getContent(AutomaticChatTab.controls.autoSortCheckbox), % Ini.path, % this.className, % "autoSort"
+        iniWrite, % AutomaticChatTab.controls.autoSortCheckbox.getContent(), % Ini.path, % this.className, % "autoSort"
     }
 
     sortArray(array) {
@@ -306,7 +306,7 @@ class AutomaticChat {
     }
 
     doAction() {
-        send, % Control.getContent(AutomaticChatTab.controls.messagesListbox)
+        send, % AutomaticChatTab.controls.messagesListbox.getContent()
         sleep, 500
         send, % "{enter}"
     }
@@ -326,7 +326,11 @@ class AutomaticChat {
     }
 
     loadSettings() {
-        guiControl, , % AutomaticChatTab.controls.autoSortCheckbox, % Ini.readIni(this.className, "autoSort")
+        valLoaded := Ini.readIni(this.className, "autoSort")
+        if (valLoaded != 0 AND valLoaded != 1) {
+            valLoaded := 1
+        }
+        AutomaticChatTab.controls.autoSortCheckbox.setCheck(valLoaded)
         this.readChatFile()
     }
 

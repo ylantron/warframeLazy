@@ -1,16 +1,20 @@
 #include %A_ScriptDir%/gui/Message.ahk
 #include %A_ScriptDir%/gui/Welcome.ahk
 #include %A_ScriptDir%/gui/StatusBar.ahk
+; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #include %A_ScriptDir%/gui/FunctionsTab.ahk
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#include %A_ScriptDir%/functions/functions/SlideAttack.ahk
+#include %A_ScriptDir%/functions/functions/FireMode.ahk
+#include %A_ScriptDir%/functions/functions/AutomaticMelee.ahk
+#include %A_ScriptDir%/functions/functions/UseKeyBehaviour.ahk
+#include %A_ScriptDir%/functions/functions/QuickAbilityUse.ahk
+#include %A_ScriptDir%/functions/functions/CustomTeleport.ahk
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #include %A_ScriptDir%/gui/AutomaticAbilitiesTab.ahk
 #include %A_ScriptDir%/gui/AutomaticChatTab.ahk
 #include %A_ScriptDir%/gui/SettingsTab.ahk
 #include %A_ScriptDir%/gui/AboutTab.ahk
-; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#include %A_ScriptDir%/functions/functions/SlideAttack.ahk
-#include %A_ScriptDir%/functions/functions/FireMode.ahk
-#include %A_ScriptDir%/functions/functions/UseKeyBehaviour.ahk
-#include %A_ScriptDir%/functions/functions/QuickAbilityUse.ahk
 #include %A_ScriptDir%/functions/automaticAbilities/AutomaticAbilities.ahk
 #include %A_ScriptDir%/functions/chat/AutomaticChat.ahk
 #include %A_ScriptDir%/functions/settings/Settings.ahk
@@ -19,7 +23,7 @@
 
 class Gui {
     static hwnd
-    static properties := {width:350, height:245}
+    static properties := {width:350, height:260}
     static key := "capslock"
     static timeTimer
 
@@ -56,10 +60,10 @@ class Gui {
         
 
         ; prevent window from moving
-        hSysMenu:=DllCall("GetSystemMenu","Int", this.hwnd ,"Int",FALSE) 
-        nCnt:=DllCall("GetMenuItemCount","Int",hSysMenu) 
-        DllCall("RemoveMenu","Int",hSysMenu,"UInt",nCnt-6,"Uint","0x400") 
-        DllCall("DrawMenuBar","Int", this.hwnd) 
+        ;hSysMenu:=DllCall("GetSystemMenu","Int", this.hwnd ,"Int",FALSE) 
+        ;nCnt:=DllCall("GetMenuItemCount","Int",hSysMenu) 
+        ;DllCall("RemoveMenu","Int",hSysMenu,"UInt",nCnt-6,"Uint","0x400") 
+        ;DllCall("DrawMenuBar","Int", this.hwnd) 
     }
 
     onWindowClose(wp, lp) {
@@ -80,6 +84,7 @@ class Gui {
             StatusBar.updateTime()
             StatusBar.updateText()
             gui, % this.hwnd ":show", % "w" this.properties.width " h" this.properties.height " x" this.getExactRightPosition() " y0"
+            mouseMove, % this.properties.width / 2, % this.properties.height / 2
         } else {
             gui, % this.hwnd ":hide"
 
@@ -91,7 +96,6 @@ class Gui {
         }
 
         this.timeTimer.toggle()
-        showTimeInStatusBar := "" ; frees object
     }
 
     getExactRightPosition() {
@@ -161,19 +165,19 @@ class Gui {
     }
 
     disableAllHotkeys() {
-        this.disableHotkey()
-        SlideAttack.disableHotkeys()
-        FireMode.disableHotkeys()
-        UseKeyBehaviour.disableHotkeys()
-        QuickAbilityUse.disableHotkeys()
+        classes := [this, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        loop, % classes.Length() {
+            classes[A_Index].disableHotkeys()
+        }
     }
 
     enableAllHotkeys() {
         this.enableHotkey()
-        SlideAttack.setAction()
-        FireMode.setAction()
-        UseKeyBehaviour.setAction()
-        QuickAbilityUse.setAction()
+
+        classes := [SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        loop, % classes.Length() {
+            classes[A_Index].setAction()
+        }
     }
 
     loadSettings() {

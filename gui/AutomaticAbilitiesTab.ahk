@@ -94,105 +94,178 @@ class AutomaticAbilitiesTab {
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Storing controls hwnd |:. - - -
-        this.modeControls := []
-        this.automaticControls := []
-        this.repeatControls := []
-        this.timeControls := []
+        this.controls.firstAbilityLabel := new Label(firstAbilityLabel)
+        this.controls.firstAbilityModeDropDownList := new DropDownList(firstAbilityModeDropDownList)
+        ; - - - - - - - - - -
+        this.controls.firstAbilityAutomaticTextbox := new Textbox(firstAbilityAutomaticTextbox)
+        this.controls.firstAbilityAutomaticUpDown := new UpDown(firstAbilityAutomaticUpDown)
+        this.controls.firstAbilityAutomaticLabel := new Label(firstAbilityAutomaticLabel)
+        ; - - - - - - - - - -
+        this.controls.firstAbilityRepeatTextbox := new Textbox(firstAbilityRepeatTextbox)
+        this.controls.firstAbilityRepeatUpDown := new UpDown(firstAbilityRepeatUpDown)
+        this.controls.firstAbilityRepeatLabel := new Label(firstAbilityRepeatLabel)
+        ; - - - - - - - - - -
+        this.controls.firstAbilityTimeTextbox := new Textbox(firstAbilityTimeTextbox)
+        this.controls.firstAbilityTimeUpDown := new UpDown(firstAbilityTimeUpDown)
+        this.controls.firstAbilityTimeDropDownList := new DropDownList(firstAbilityTimeDropDownList)
+
+
+
+        this.controls.secondAbilityLabel := new Label(secondAbilityLabel)
+        this.controls.secondAbilityModeDropDownList := new DropDownList(secondAbilityModeDropDownList)
+        ; - - - - - - - - - -
+        this.controls.secondAbilityAutomaticTextbox := new Textbox(secondAbilityAutomaticTextbox)
+        this.controls.secondAbilityAutomaticUpDown := new UpDown(secondAbilityAutomaticUpDown)
+        this.controls.secondAbilityAutomaticLabel := new Label(secondAbilityAutomaticLabel)
+        ; - - - - - - - - - -
+        this.controls.secondAbilityRepeatTextbox := new Textbox(secondAbilityRepeatTextbox)
+        this.controls.secondAbilityRepeatUpDown := new UpDown(secondAbilityRepeatUpDown)
+        this.controls.secondAbilityRepeatLabel := new Label(secondAbilityRepeatLabel)
+        ; - - - - - - - - - -
+        this.controls.secondAbilityTimeTextbox := new Textbox(secondAbilityTimeTextbox)
+        this.controls.secondAbilityTimeUpDown := new UpDown(secondAbilityTimeUpDown)
+        this.controls.secondAbilityTimeDropDownList := new DropDownList(secondAbilityTimeDropDownList)
+
+
+
+        this.controls.thirdAbilityLabel := new Label(thirdAbilityLabel)
+        this.controls.thirdAbilityModeDropDownList := new DropDownList(thirdAbilityModeDropDownList)
+        ; - - - - - - - - - -
+        this.controls.thirdAbilityAutomaticTextbox := new Textbox(thirdAbilityAutomaticTextbox)
+        this.controls.thirdAbilityAutomaticUpDown := new UpDown(thirdAbilityAutomaticUpDown)
+        this.controls.thirdAbilityAutomaticLabel := new Label(thirdAbilityAutomaticLabel)
+        ; - - - - - - - - - -
+        this.controls.thirdAbilityRepeatTextbox := new Textbox(thirdAbilityRepeatTextbox)
+        this.controls.thirdAbilityRepeatUpDown := new UpDown(thirdAbilityRepeatUpDown)
+        this.controls.thirdAbilityRepeatLabel := new Label(thirdAbilityRepeatLabel)
+        ; - - - - - - - - - -
+        this.controls.thirdAbilityTimeTextbox := new Textbox(thirdAbilityTimeTextbox)
+        this.controls.thirdAbilityTimeUpDown := new UpDown(thirdAbilityTimeUpDown)
+        this.controls.thirdAbilityTimeDropDownList := new DropDownList(thirdAbilityTimeDropDownList)
+
+
+
+        this.controls.fourthAbilityLabel := new Label(fourthAbilityLabel)
+        this.controls.fourthAbilityModeDropDownList := new DropDownList(fourthAbilityModeDropDownList)
+        ; - - - - - - - - - -
+        this.controls.fourthAbilityAutomaticTextbox := new Textbox(fourthAbilityAutomaticTextbox)
+        this.controls.fourthAbilityAutomaticUpDown := new UpDown(fourthAbilityAutomaticUpDown)
+        this.controls.fourthAbilityAutomaticLabel := new Label(fourthAbilityAutomaticLabel)
+        ; - - - - - - - - - -
+        this.controls.fourthAbilityRepeatTextbox := new Textbox(fourthAbilityRepeatTextbox)
+        this.controls.fourthAbilityRepeatUpDown := new UpDown(fourthAbilityRepeatUpDown)
+        this.controls.fourthAbilityRepeatLabel := new Label(fourthAbilityRepeatLabel)
+        ; - - - - - - - - - -
+        this.controls.fourthAbilityTimeTextbox := new Textbox(fourthAbilityTimeTextbox)
+        this.controls.fourthAbilityTimeUpDown := new UpDown(fourthAbilityTimeUpDown)
+        this.controls.fourthAbilityTimeDropDownList := new DropDownList(fourthAbilityTimeDropDownList)
+
+
+
+        this.controls.fifthAbilityLabel := new Label(fifthAbilityLabel)
+        this.controls.fifthAbilityModeDropDownList := new DropDownList(fifthAbilityModeDropDownList)
+        ; - - - - - - - - - -
+        this.controls.fifthAbilityAutomaticTextbox := new Textbox(fifthAbilityAutomaticTextbox)
+        this.controls.fifthAbilityAutomaticUpDown := new UpDown(fifthAbilityAutomaticUpDown)
+        this.controls.fifthAbilityAutomaticLabel := new Label(fifthAbilityAutomaticLabel)
+        ; - - - - - - - - - -
+        this.controls.fifthAbilityRepeatTextbox := new Textbox(fifthAbilityRepeatTextbox)
+        this.controls.fifthAbilityRepeatUpDown := new UpDown(fifthAbilityRepeatUpDown)
+        this.controls.fifthAbilityRepeatLabel := new Label(fifthAbilityRepeatLabel)
+        ; - - - - - - - - - -
+        this.controls.fifthAbilityTimeTextbox := new Textbox(fifthAbilityTimeTextbox)
+        this.controls.fifthAbilityTimeUpDown := new UpDown(fifthAbilityTimeUpDown)
+        this.controls.fifthAbilityTimeDropDownList := new DropDownList(fifthAbilityTimeDropDownList)
+
+        ; =================================================================================
+
+        this.modeControls[1] := this.controls.firstAbilityModeDropDownList
+        this.modeControls[2] := this.controls.secondAbilityModeDropDownList
+        this.modeControls[3] := this.controls.thirdAbilityModeDropDownList
+        this.modeControls[4] := this.controls.fourthAbilityModeDropDownList
+        this.modeControls[5] := this.controls.fifthAbilityModeDropDownList
 
         loop, 5 {
-            this.automaticControls[A_Index] := {}
-            this.repeatControls[A_Index] := {}
-            this.timeControls[A_Index] := {}
+            this.automaticControls[A_Index] := new ControlGroup()
+            this.repeatControls[A_Index] := new ControlGroup()
+            this.timeControls[A_Index] := new ControlGroup()
         }
 
-        this.controls.firstAbilityLabel := firstAbilityLabel
-        this.controls.firstAbilityModeDropDownList := this.modeControls[1] := firstAbilityModeDropDownList
-        ; - - - - - - - - - -
-        this.controls.firstAbilityAutomaticTextbox := this.automaticControls[1].automaticTextbox := firstAbilityAutomaticTextbox
-        this.controls.firstAbilityAutomaticUpDown := this.automaticControls[1].automaticUpDown := firstAbilityAutomaticUpDown
-        this.controls.firstAbilityAutomaticLabel := this.automaticControls[1].automaticLabel := firstAbilityAutomaticLabel
-        ; - - - - - - - - - -
-        this.controls.firstAbilityRepeatTextbox := this.repeatControls[1].repeatTextbox := firstAbilityRepeatTextbox
-        this.controls.firstAbilityRepeatUpDown := this.repeatControls[1].repeatUpDown := firstAbilityRepeatUpDown
-        this.controls.firstAbilityRepeatLabel := this.repeatControls[1].repeatLabel := firstAbilityRepeatLabel
-        ; - - - - - - - - - -
-        this.controls.firstAbilityTimeTextbox := this.timeControls[1].timeTextbox := firstAbilityTimeTextbox
-        this.controls.firstAbilityTimeUpDown := this.timeControls[1].timeUpDown := firstAbilityTimeUpDown
-        this.controls.firstAbilityTimeDropDownList := this.timeControls[1].timeDropDownList := firstAbilityTimeDropDownList
+        this.automaticControls[1].addControl(this.controls.firstAbilityAutomaticTextbox)
+        this.automaticControls[1].addControl(this.controls.firstAbilityAutomaticUpDown)
+        this.automaticControls[1].addControl(this.controls.firstAbilityAutomaticLabel)
+
+        this.repeatControls[1].addControl(this.controls.firstAbilityRepeatTextbox)
+        this.repeatControls[1].addControl(this.controls.firstAbilityRepeatUpDown)
+        this.repeatControls[1].addControl(this.controls.firstAbilityRepeatLabel)
+
+        this.timeControls[1].addControl(this.controls.firstAbilityTimeTextbox)
+        this.timeControls[1].addControl(this.controls.firstAbilityTimeUpDown)
+        this.timeControls[1].addControl(this.controls.firstAbilityTimeDropDownList)
 
 
 
-        this.controls.secondAbilityLabel := secondAbilityLabel
-        this.controls.secondAbilityModeDropDownList := this.modeControls[2] := secondAbilityModeDropDownList
-        ; - - - - - - - - - -
-        this.controls.secondAbilityAutomaticTextbox := this.automaticControls[2].automaticTextbox := secondAbilityAutomaticTextbox
-        this.controls.secondAbilityAutomaticUpDown := this.automaticControls[2].automaticUpDown := secondAbilityAutomaticUpDown
-        this.controls.secondAbilityAutomaticLabel := this.automaticControls[2].automaticLabel := secondAbilityAutomaticLabel
-        ; - - - - - - - - - -
-        this.controls.secondAbilityRepeatTextbox := this.repeatControls[2].repeatTextbox := secondAbilityRepeatTextbox
-        this.controls.secondAbilityRepeatUpDown := this.repeatControls[2].repeatUpDown := secondAbilityRepeatUpDown
-        this.controls.secondAbilityRepeatLabel := this.repeatControls[2].repeatLabel := secondAbilityRepeatLabel
-        ; - - - - - - - - - -
-        this.controls.secondAbilityTimeTextbox := this.timeControls[2].timeTextbox := secondAbilityTimeTextbox
-        this.controls.secondAbilityTimeUpDown := this.timeControls[2].timeUpDown := secondAbilityTimeUpDown
-        this.controls.secondAbilityTimeDropDownList := this.timeControls[2].timeDropDownList := secondAbilityTimeDropDownList
+        this.automaticControls[2].addControl(this.controls.secondAbilityAutomaticTextbox)
+        this.automaticControls[2].addControl(this.controls.secondAbilityAutomaticUpDown)
+        this.automaticControls[2].addControl(this.controls.secondAbilityAutomaticLabel)
+
+        this.repeatControls[2].addControl(this.controls.secondAbilityRepeatTextbox)
+        this.repeatControls[2].addControl(this.controls.secondAbilityRepeatUpDown)
+        this.repeatControls[2].addControl(this.controls.secondAbilityRepeatLabel)
+
+        this.timeControls[2].addControl(this.controls.secondAbilityTimeTextbox)
+        this.timeControls[2].addControl(this.controls.secondAbilityTimeUpDown)
+        this.timeControls[2].addControl(this.controls.secondAbilityTimeDropDownList)
 
 
 
-        this.controls.thirdAbilityLabel := thirdAbilityLabel
-        this.controls.thirdAbilityModeDropDownList := this.modeControls[3] := thirdAbilityModeDropDownList
-        ; - - - - - - - - - -
-        this.controls.thirdAbilityAutomaticTextbox := this.automaticControls[3].automaticTextbox := thirdAbilityAutomaticTextbox
-        this.controls.thirdAbilityAutomaticUpDown := this.automaticControls[3].automaticUpDown := thirdAbilityAutomaticUpDown
-        this.controls.thirdAbilityAutomaticLabel := this.automaticControls[3].automaticLabel := thirdAbilityAutomaticLabel
-        ; - - - - - - - - - -
-        this.controls.thirdAbilityRepeatTextbox := this.repeatControls[3].repeatTextbox := thirdAbilityRepeatTextbox
-        this.controls.thirdAbilityRepeatUpDown := this.repeatControls[3].repeatUpDown := thirdAbilityRepeatUpDown
-        this.controls.thirdAbilityRepeatLabel := this.repeatControls[3].repeatLabel := thirdAbilityRepeatLabel
-        ; - - - - - - - - - -
-        this.controls.thirdAbilityTimeTextbox := this.timeControls[3].timeTextbox := thirdAbilityTimeTextbox
-        this.controls.thirdAbilityTimeUpDown := this.timeControls[3].timeUpDown := thirdAbilityTimeUpDown
-        this.controls.thirdAbilityTimeDropDownList := this.timeControls[3].timeDropDownList := thirdAbilityTimeDropDownList
+        this.automaticControls[3].addControl(this.controls.thirdAbilityAutomaticTextbox)
+        this.automaticControls[3].addControl(this.controls.thirdAbilityAutomaticUpDown)
+        this.automaticControls[3].addControl(this.controls.thirdAbilityAutomaticLabel)
+
+        this.repeatControls[3].addControl(this.controls.thirdAbilityRepeatTextbox)
+        this.repeatControls[3].addControl(this.controls.thirdAbilityRepeatUpDown)
+        this.repeatControls[3].addControl(this.controls.thirdAbilityRepeatLabel)
+
+        this.timeControls[3].addControl(this.controls.thirdAbilityTimeTextbox)
+        this.timeControls[3].addControl(this.controls.thirdAbilityTimeUpDown)
+        this.timeControls[3].addControl(this.controls.thirdAbilityTimeDropDownList)
 
 
 
-        this.controls.fourthAbilityLabel := fourthAbilityLabel
-        this.controls.fourthAbilityModeDropDownList := this.modeControls[4] := fourthAbilityModeDropDownList
-        ; - - - - - - - - - -
-        this.controls.fourthAbilityAutomaticTextbox := this.automaticControls[4].automaticTextbox := fourthAbilityAutomaticTextbox
-        this.controls.fourthAbilityAutomaticUpDown := this.automaticControls[4].automaticUpDown := fourthAbilityAutomaticUpDown
-        this.controls.fourthAbilityAutomaticLabel := this.automaticControls[4].automaticLabel := fourthAbilityAutomaticLabel
-        ; - - - - - - - - - -
-        this.controls.fourthAbilityRepeatTextbox := this.repeatControls[4].repeatTextbox := fourthAbilityRepeatTextbox
-        this.controls.fourthAbilityRepeatUpDown := this.repeatControls[4].repeatUpDown := fourthAbilityRepeatUpDown
-        this.controls.fourthAbilityRepeatLabel := this.repeatControls[4].repeatLabel := fourthAbilityRepeatLabel
-        ; - - - - - - - - - -
-        this.controls.fourthAbilityTimeTextbox := this.timeControls[4].timeTextbox := fourthAbilityTimeTextbox
-        this.controls.fourthAbilityTimeUpDown := this.timeControls[4].timeUpDown := fourthAbilityTimeUpDown
-        this.controls.fourthAbilityTimeDropDownList := this.timeControls[4].timeDropDownList := fourthAbilityTimeDropDownList
+        this.automaticControls[4].addControl(this.controls.fourthAbilityAutomaticTextbox)
+        this.automaticControls[4].addControl(this.controls.fourthAbilityAutomaticUpDown)
+        this.automaticControls[4].addControl(this.controls.fourthAbilityAutomaticLabel)
+
+        this.repeatControls[4].addControl(this.controls.fourthAbilityRepeatTextbox)
+        this.repeatControls[4].addControl(this.controls.fourthAbilityRepeatUpDown)
+        this.repeatControls[4].addControl(this.controls.fourthAbilityRepeatLabel)
+
+        this.timeControls[4].addControl(this.controls.fourthAbilityTimeTextbox)
+        this.timeControls[4].addControl(this.controls.fourthAbilityTimeUpDown)
+        this.timeControls[4].addControl(this.controls.fourthAbilityTimeDropDownList)
 
 
 
-        this.controls.fifthAbilityLabel := fifthAbilityLabel
-        this.controls.fifthAbilityModeDropDownList := this.modeControls[5] := fifthAbilityModeDropDownList
-        ; - - - - - - - - - -
-        this.controls.fifthAbilityAutomaticTextbox := this.automaticControls[5].automaticTextbox := fifthAbilityAutomaticTextbox
-        this.controls.fifthAbilityAutomaticUpDown := this.automaticControls[5].automaticUpDown := fifthAbilityAutomaticUpDown
-        this.controls.fifthAbilityAutomaticLabel := this.automaticControls[5].automaticLabel := fifthAbilityAutomaticLabel
-        ; - - - - - - - - - -
-        this.controls.fifthAbilityRepeatTextbox := this.repeatControls[5].repeatTextbox := fifthAbilityRepeatTextbox
-        this.controls.fifthAbilityRepeatUpDown := this.repeatControls[5].repeatUpDown := fifthAbilityRepeatUpDown
-        this.controls.fifthAbilityRepeatLabel := this.repeatControls[5].repeatLabel := fifthAbilityRepeatLabel
-        ; - - - - - - - - - -
-        this.controls.fifthAbilityTimeTextbox := this.timeControls[5].timeTextbox := fifthAbilityTimeTextbox
-        this.controls.fifthAbilityTimeUpDown := this.timeControls[5].timeUpDown := fifthAbilityTimeUpDown
-        this.controls.fifthAbilityTimeDropDownList := this.timeControls[5].timeDropDownList := fifthAbilityTimeDropDownList
-        ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        this.automaticControls[5].addControl(this.controls.fifthAbilityAutomaticTextbox)
+        this.automaticControls[5].addControl(this.controls.fifthAbilityAutomaticUpDown)
+        this.automaticControls[5].addControl(this.controls.fifthAbilityAutomaticLabel)
+
+        this.repeatControls[5].addControl(this.controls.fifthAbilityRepeatTextbox)
+        this.repeatControls[5].addControl(this.controls.fifthAbilityRepeatUpDown)
+        this.repeatControls[5].addControl(this.controls.fifthAbilityRepeatLabel)
+
+        this.timeControls[5].addControl(this.controls.fifthAbilityTimeTextbox)
+        this.timeControls[5].addControl(this.controls.fifthAbilityTimeUpDown)
+        this.timeControls[5].addControl(this.controls.fifthAbilityTimeDropDownList)
+       ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Hide all automatic, repeat and time controls |:. - - -
-        Control.setVisibilities(this.automaticControls.MaxIndex(), this.automaticControls, "off")
-        Control.setVisibilities(this.repeatControls.MaxIndex(), this.repeatControls, "off")
-        Control.setVisibilities(this.timeControls.MaxIndex(), this.timeControls, "off")
+        Loop, 5 {
+            this.automaticControls[A_Index].setVisibility("off")
+            this.repeatControls[A_Index].setVisibility("off")
+            this.timeControls[A_Index].setVisibility("off")
+        }
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Including and binding functions to controls |:. - - -
