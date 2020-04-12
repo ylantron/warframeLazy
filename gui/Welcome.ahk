@@ -22,6 +22,9 @@ class Welcome {
                     .   "write the character ""h""." "`n"
                     .   "To restore the original macro key function the combination ALT + Macro Key is used" "`n`n"
 
+                    .   "You should use the Borderless Fullscreen or Windowed option of Warframe, otherwise" "`n"
+                    .   "be ready for a lot of window switching" "`n`n"
+                    
                     .   "Although this macro can prevent invalid key to be bound to functions it will not prevent" "`n"
                     .   "some weird behaviour. If this is the case (or if the macro goes crazy) you can panic exit" "`n"
                     .   "using the combination CTRL + SHIFT + ALT + F12 (I know it's a long combination but it" "`n"

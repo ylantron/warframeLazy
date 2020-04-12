@@ -26,7 +26,7 @@ class CustomTeleport {
     }
 
     tutorial() {
-        new Message("The ""Custom Teleport"" Function uses an exploit based on the last secure position.`nPlace the operator where you want to teleport, then from anywhere, jump in the air and press the key to teleport to the saved location`nWARNING: you can't use the operator if you plan to use this function and after teleporting you have to wait the cooldown for the /unstuck command")
+        new Message("The ""Custom Teleport"" Function uses an exploit based on the last secure position.`nPlace the operator where you want to teleport, then from anywhere, jump in the air and press the key to teleport to the saved location`n`nWARNING:`n- you can't use the operator if you plan to use this function (use of operator will delete the saved position)`n- after teleporting you have to wait the cooldown for the /unstuck command`n- make sure nothing is wrote in the chat before using the function`n- this function may not work if ping is high (or operator spawns take a lot of time)")
     }
 
     setState(state := "toggle") {
@@ -88,13 +88,21 @@ class CustomTeleport {
     }
 
     doAction() {
+        sleepVal := 100
+
         Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
-        sleep, 100
+        sleep, % sleepVal
+
         send, % "{" WarframeValues.keys.chat "}"
-        sleep, 100
+        sleep, % sleepVal
+        
         send, % "/unstuck"
-        sleep, 100
+        sleep, 600
+
         send, % "{enter}"
+        sleep, % sleepVal
+
+        Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
     }
 
     doActionNormal() {

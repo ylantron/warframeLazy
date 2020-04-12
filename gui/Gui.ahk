@@ -158,7 +158,7 @@ class Gui {
     }
 
     disableAllHotkeys() {
-        ;classes := [this, SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
+        local classes := [this]
 
         loop, % FunctionsTab.classes.Length() {
             classes.Push(FunctionsTab.classes[A_Index])
@@ -172,7 +172,6 @@ class Gui {
     enableAllHotkeys() {
         this.enableHotkey()
 
-        ;classes := [SlideAttack, FireMode, AutomaticMelee, UseKeyBehaviour, QuickAbilityUse, CustomTeleport]
         loop, % FunctionsTab.classes.Length() {
             FunctionsTab.classes[A_Index].setAction()
         }

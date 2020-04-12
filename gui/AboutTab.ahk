@@ -13,7 +13,7 @@ class AboutTab {
         gui, % Gui.hwnd ":font", % "s14 w500"
         gui, % Gui.hwnd ":add", text, % "x+14 yp20", % "Warframe Lazy"
         gui, % Gui.hwnd ":font", % "s10 w350"
-        gui, % Gui.hwnd ":add", text, % "y+4", % "Version " MacroValues.release "." MacroValues.version "." MacroValues.revision
+        gui, % Gui.hwnd ":add", text, % "y+4", % "Version " MacroValues.getVersion()
         gui, font
         gui, % Gui.hwnd ":add", button, % "y+4 hwnd" "changelogButton", % "What's new?"
 

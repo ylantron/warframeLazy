@@ -24,6 +24,9 @@ class AutomaticChat {
         function := ObjBindMethod(this, "editItem", "")
         guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.editItemButton.getHwnd(), % function
 
+        function := ObjBindMethod(this, "filterItems")
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.filterDropDownList.getHwnd(), % function
+        
         function := ObjBindMethod(this, "itemsListboxEvents")
         guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.messagesListbox.getHwnd(), % function
 
@@ -45,7 +48,10 @@ class AutomaticChat {
         function := ObjBindMethod(this, "emptyList", "1")
         guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.deleteItemsButton.getHwnd(), % function
 
-        function := ObjBindMethod(this, "setAction", "1")
+        function := ObjBindMethod(this, "doAction", "1")
+        guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.sendButton.getHwnd(), % function
+
+        function := ObjBindMethod(this, "setAction")
         guiControl, % Gui.hwnd ":+g", % AutomaticChatTab.controls.startButton.getHwnd(), % function
     }
 
@@ -76,7 +82,7 @@ class AutomaticChat {
     }
 
     changeListboxButtonsState() {
-        ; MOVE AND START BUTTONS HANDLING
+        ; MOVE BUTTONS HANDLING
         if (AutomaticChatTab.controls.autoSortCheckbox.getContent() = 1) { ; if sort checkbox is checked
             AutomaticChatTab.controls.moveUpItemButton.setEnable("off")
             AutomaticChatTab.controls.moveDownItemButton.setEnable("off")
@@ -110,7 +116,8 @@ class AutomaticChat {
             AutomaticChatTab.controls.deleteItemsButton.setEnable("off")
         }
 
-        ; START BUTTON HANDLING
+        ; SEND AND START BUTTON HANDLING
+        AutomaticChatTab.controls.sendButton.setEnable(AutomaticChatTab.controls.messagesListbox.getContent() != "" ? 1 : 0)
         AutomaticChatTab.controls.startButton.setEnable(AutomaticChatTab.controls.messagesListbox.getContent() != "" ? 1 : 0)
     }
 
@@ -190,6 +197,47 @@ class AutomaticChat {
         loop, % this.messagesListboxItems.Length() {
             str .= this.messagesListboxItems[A_Index] (preselectItem != this.messagesListboxItems[A_Index] ? "|" : "||")
             fileAppend, % this.messagesListboxItems[A_Index] "`n", % Ini.pathChat
+        }
+
+        AutomaticChatTab.controls.messagesListbox.setContent(str)
+    }
+
+    filterItems() { ; CHECK IF THIS CODE CAN BE BETTER WRITTEN
+        StringCaseSense, off
+
+        if (AutomaticChatTab.controls.filterDropDownList.getContent() = "All"){
+            this.refreshItems()
+            return
+        }
+
+
+        str := "|"
+        loop, % this.messagesListboxItems.Length() {
+            if ((AutomaticChatTab.controls.filterDropDownList.getContent() = "Recruiting")
+            AND (   (substr(this.messagesListboxItems[A_Index], 1, 3) = "LF ")
+                OR  (substr(this.messagesListboxItems[A_Index], 1, 2) = "H "))) {
+                str .= this.messagesListboxItems[A_Index] "|"
+            } else if ((AutomaticChatTab.controls.filterDropDownList.getContent() = "Trading")
+            AND (   (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTS ")
+                OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTB ")
+                OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTT ")
+                OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "PC "))) {
+                str .= this.messagesListboxItems[A_Index] "|"
+            } else if ((AutomaticChatTab.controls.filterDropDownList.getContent() = "Private Messages")
+            AND (substr(this.messagesListboxItems[A_Index], 1, 3) = "/w ")) {
+                str .= this.messagesListboxItems[A_Index] "|"
+            } else if (AutomaticChatTab.controls.filterDropDownList.getContent() = "Miscellaneous") {
+                if (    (substr(this.messagesListboxItems[A_Index], 1, 3) = "LF ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 2) = "H ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTS ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTT ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "PC ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "/w ")) {
+                    continue
+                }
+
+                str .= this.messagesListboxItems[A_Index] "|"
+            }
         }
 
         AutomaticChatTab.controls.messagesListbox.setContent(str)
@@ -290,6 +338,13 @@ class AutomaticChat {
         this.chatTimer := new Timer(this.chatDelay + 10000, this, "doAction", "")
         
 
+        this.openChat()
+        this.doAction()
+        this.chatTimer.start() 
+        this.checkTimer := new Timer(-50, this, "checkButtonPressed", "", 1)
+    }
+
+    openChat() {
         Gui.showHideGui() ;hide gui
         if (winexist("ahk_exe Warframe.exe")) {
             winActivate, % "ahk_exe Warframe.exe"
@@ -300,12 +355,13 @@ class AutomaticChat {
         sleep, 1000
         send, % "{" WarframeValues.keys.chat "}"
         sleep, 200
-        this.doAction()
-        this.chatTimer.start() 
-        this.checkTimer := new Timer(-50, this, "checkButtonPressed", "", 1)
     }
 
-    doAction() {
+    doAction(sendButton := 0) {
+        if (sendButton = 1) {
+            this.openChat()
+        }
+
         send, % AutomaticChatTab.controls.messagesListbox.getContent()
         sleep, 500
         send, % "{enter}"
