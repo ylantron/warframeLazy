@@ -2,6 +2,7 @@ class Welcome {
     static hwnd
     static properties := {width:470, height:430}
     static controls := {}
+    static created := false
 
     createGui() {
         gui, new, % "-resize -minimizeBox -MaximizeBox hwnd" "welcomeHwnd", % "Welcome"
@@ -15,7 +16,7 @@ class Welcome {
                     .   "Once started the macro will run in the background;" "`n"
                     .   "To show or hide it you have to press the combinations:" "`n"
                     .   "- CTRL + SHIFT + Macro Key (currently """ Gui.key """)" "`t" "for every window outside warframe" "`n"
-                    .   "- Macro Key (currently """ Gui.key """)" "`t`t`t" "when warframe or macro has the focus" "`n`n"
+                    .   "- Macro Key (currently """ Gui.key """)" "`t`t`t" " when warframe or macro has the focus" "`n`n"
 
                     .   "When in warframe the function of the macro key is disabled (for instance if you bind ""h""" "`n"
                     .   "for showing the macro, when in warframe, pressing ""h"" will show/hide the macro and will not" "`n"
@@ -38,7 +39,7 @@ class Welcome {
                     .   "Enjoy Tenno! :)"
         gui, % this.hwnd ":add", link, % "x12 y12 hwnd" "welcomeTextLabel", % welcomeTxt
 
-        gui, % this.hwnd ":add", checkbox, % "x12 y" this.properties.height - 30 " checked0 hwnd" "hideWelcomeCheckbox", % "Hide welcome window at startup"
+        gui, % this.hwnd ":add", checkbox, % "x12 y" this.properties.height - 30 " checked" (SettingsTab.controls.showWelcomeCheckbox.getContent() = 0 ? 1 : 0) " hwnd" "hideWelcomeCheckbox", % "Hide welcome window at startup"
         gui, % this.hwnd ":add", button, % "x" this.properties.width - 180 " y" this.properties.height - 40 " w100 h30 hwnd" "showMacroButton", % "Show Macro"
         gui, % this.hwnd ":add", button, % "xp106 yp0 w60 h30 hwnd" "okButton", % "OK"
 
@@ -49,7 +50,24 @@ class Welcome {
         this.controls.showMacroButton := new Button(showMacroButton)
         this.controls.okButton := new Button(okButton)
         ; - - - - - - -
+
+        this.created := true
+
+        ; handle window close
+        function := ObjBindMethod(this, "onWindowClose")
+        OnMessage(0x112, function)
+
         this.bindFunctions()
+    }
+
+    onWindowClose(wp, lp) {
+        static SC_CLOSE := 0xF060
+        if (A_Gui != this.hwnd)
+        Return
+        
+        if (wp = SC_CLOSE) {
+            this.destroyGui(0)
+        }
     }
 
     showGui() {
@@ -73,14 +91,19 @@ class Welcome {
             Gui.showHideGui()
         }
 
+        this.created := false
+
         gui, % this.hwnd ":destroy"
         this.hwnd := ""
-        this.properties := ""
-        this.controls := ""
+        this.controls := {}
     }
 
     checkboxAction() {
         SettingsTab.controls.showWelcomeCheckbox.setCheck(!this.controls.hideWelcomeCheckbox.getContent())
         iniWrite, % SettingsTab.controls.showWelcomeCheckbox.getContent(), % Ini.path, % "Macro", % "showWelcome"
+    }
+
+    isCreated() {
+        return (this.created = true ? true : false)
     }
 }

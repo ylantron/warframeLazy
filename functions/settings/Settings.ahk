@@ -15,7 +15,21 @@ class Settings {
         guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showEmailCheckbox.getHwnd(), % function
         guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showPhraseCheckbox.getHwnd(), % function
 
-        function := ""
+        function := ObjBindMethod(this, "showWelcome")
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.showWelcomeButton.getHwnd(), % function
+
+        function := ObjBindMethod(CustomTeleport, "changeDelay", "")
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.customTeleportDelayTextbox.getHwnd(), % function
+        guiControl, % Gui.hwnd ":+g", % SettingsTab.controls.customTeleportDelayUpDown.getHwnd(), % function
+    }
+
+    showWelcome() {
+        if (Welcome.isCreated() = false) {
+            Welcome.createGui()
+            Welcome.showGui()
+        } else {
+            controlFocus, , % "ahk_id " Welcome.hwnd
+        }
     }
 
     changeKeys() {
@@ -114,6 +128,13 @@ class Settings {
             valLoaded := 1
         }
         SettingsTab.controls.showWelcomeCheckbox.setCheck(valLoaded)
+
+        valLoaded := Ini.readIni(CustomTeleport.className, "delay")
+        if (valLoaded < 50 OR valLoaded > 999) {
+            valLoaded := 50
+        }
+        CustomTeleport.delay := valLoaded
+        SettingsTab.controls.customTeleportDelayUpDown.setText(valLoaded)
 
         this.setCheckboxState()
     }

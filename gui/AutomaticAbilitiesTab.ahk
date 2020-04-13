@@ -2,7 +2,7 @@ Gui.ownedClasses.Push(AutomaticAbilitiesTab)
 
 class AutomaticAbilitiesTab {
     static controls = {}
-    static properties = { spacing:34 }
+    static properties = { spacing:36 }
     static dropDownListValues := ["Normal", "Automatic", "Repeated", "Timed", "Delayed"]
 
     createGui() {

@@ -23,7 +23,7 @@
 
 class Gui {
     static hwnd
-    static properties := {width:350, height:260}
+    static properties := {width:350, height:280}
     static key := "capslock"
     static timeTimer
 

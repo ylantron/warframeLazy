@@ -12,9 +12,9 @@ class FunctionsTab {
         ; - - - .:| Adding controls to gui |:. - - -
         gui, % Gui.hwnd ":tab", % "Functions"
 
-        gui, % Gui.hwnd ":add", text, % "x12 y28", % "Click on a function to show a mini tutorial"
+        gui, % Gui.hwnd ":add", text, % "x12 y30", % "Click on a function to show a mini tutorial"
 
-        gui, % Gui.hwnd ":add", text, % "x12 y60 hwnd" "slideAttackLabel", % "Slide attack"
+        gui, % Gui.hwnd ":add", text, % "x12 y64 hwnd" "slideAttackLabel", % "Slide attack"
         gui, % Gui.hwnd ":add", button, % "x120 yp-4 section w30 hwnd" "slideAttackButton", Off
         gui, % Gui.hwnd ":add", text, % "x+10 yp+4 w100 cGray hwnd" "slideAttackValueLabel"
 

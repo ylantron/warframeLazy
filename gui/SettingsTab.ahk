@@ -33,16 +33,23 @@ class SettingsTab {
         gui, % Gui.hwnd ":add", text, % "xs0 yp" this.properties.spacing " hwnd" "customTeleportLabel", % "Custom Teleport Key"
         gui, % Gui.hwnd ":add", edit, % "xp120 yp-4 w80 hwnd" "customTeleportTextbox", % CustomTeleport.key
 
+        gui, % Gui.hwnd ":add", button, % "xs0 y+6 w201 h22 hwnd" "changeKeysButton", % "Change keys"
+
         ; - - - - - - - - - - -
-        gui, % Gui.hwnd ":add", text, % "x220 ys-4 h125 0x11"  ;Vertical Line
+        gui, % Gui.hwnd ":add", text, % "x220 ys-4 h161 0x11"  ;Vertical Line
         ; - - - - - - - - - - -
 
-        gui, % Gui.hwnd ":add", checkbox, % "xp10 ys-6 checked0 hwnd" "guiAlwaysOnTopCheckbox", % "Macro always" "`non top"
+        gui, % Gui.hwnd ":add", checkbox, % "xp10 ys-5 checked0 hwnd" "guiAlwaysOnTopCheckbox", % "Macro always" "`non top"
         gui, % Gui.hwnd ":add", checkbox, % "xp0 yp32 checked1 hwnd" "showEmailCheckbox", % "Show account" "`nemail in status bar"
         gui, % Gui.hwnd ":add", checkbox, % "xp0 yp32 disabled checked1 hwnd" "showPhraseCheckbox", % "Show random" "`nphrases in status bar"
         gui, % Gui.hwnd ":add", checkbox, % "xp0 yp32 checked1 hwnd" "showWelcomeCheckbox", % "Show welcome" "`non startup"
+        gui, % Gui.hwnd ":add", button, % "xp0 y+6 w110 h22 hwnd" "showWelcomeButton", % "Show Welcome"
 
-        gui, % Gui.hwnd ":add", button, % "xp0 ys123 w112 h22 hwnd" "changeKeysButton", % "Change keys"
+        gui, % Gui.hwnd ":add", text, % "xp-10 y+8 w126 0x10" ; horizontal line
+
+        gui, % Gui.hwnd ":add", text, % "xp0 y+1 hwnd" "customTeleportDelayLabel", % "Delay (ms)"
+        gui, % Gui.hwnd ":add", edit, % "x+5 yp-4 w53 limit3 number hwnd" "customTeleportDelayTextbox", % ""
+        gui, % Gui.hwnd ":add", upDown, % "range50-999 hwnd" "customTeleportDelayUpDown", % "50"
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Storing controls hwnd |:. - - -
@@ -67,14 +74,18 @@ class SettingsTab {
         this.controls.quickAbilityUseKeyLabel := this.labelControls[7] := new Label(customTeleportLabel)
         this.controls.quickAbilityUseKeyTextbox := this.keyControls[7] := new Textbox(customTeleportTextbox)
 
+        this.controls.changeKeysButton := new Button(changeKeysButton)
         ; - - - - - - - - - - -
 
         this.controls.guiAlwaysOnTopCheckbox := new Checkbox(guiAlwaysOnTopCheckbox)
         this.controls.showEmailCheckbox := new Checkbox(showEmailCheckbox)
         this.controls.showPhraseCheckbox := new Checkbox(showPhraseCheckbox)
         this.controls.showWelcomeCheckbox := new Checkbox(showWelcomeCheckbox)
+        this.controls.showWelcomeButton := new Button(showWelcomeButton)
 
-        this.controls.changeKeysButton := new Button(changeKeysButton)
+        this.controls.customTeleportDelayLabel := new Label(customTeleportDelayLabel)
+        this.controls.customTeleportDelayTextbox := new Textbox(customTeleportDelayTextbox)
+        this.controls.customTeleportDelayUpDown := new UpDown(customTeleportDelayUpDown)
         ; ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
         ; - - - .:| Including and binding functions to controls |:. - - -

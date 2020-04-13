@@ -14,13 +14,13 @@ class AutomaticChatTab {
         gui, % Gui.hwnd ":add", button, % "x+5 yp-1 w44 h22 disabled +default hwnd" "addItemButton", % "Add"
         gui, % Gui.hwnd ":add", button, % "x+5 w44 h22 disabled hwnd" "editItemButton", % "Edit"
 
-        gui, % Gui.hwnd ":add", text, % "x6 y+9 hwnd" "filterLabel", % "Filter:"
-        gui, % Gui.hwnd ":add", dropdownList, % "x+7 yp-4 w206 section hwnd" "filterDropDownList", % "All||Recruiting|Trading|Private Messages|Miscellaneous"
-        gui, % Gui.hwnd ":add", listbox, % "x6 y+3 w239 r11 +vscroll +hscroll hwnd" "messagesListbox"
+        gui, % Gui.hwnd ":add", text, % "x6 y+16 hwnd" "filterLabel", % "Filter:"
+        gui, % Gui.hwnd ":add", dropdownList, % "x+7 yp-4 w206 hwnd" "filterDropDownList", % "All||Recruiting|Trading|Private Messages|Miscellaneous"
+        gui, % Gui.hwnd ":add", checkbox, % "x+5 yp3 checked1 hwnd" "autoSortCheckbox", % "Automatic Sort"
 
-        gui, % Gui.hwnd ":add", checkbox, % "x+5 ys3 checked1 hwnd" "autoSortCheckbox", % "Automatic Sort"
+        gui, % Gui.hwnd ":add", listbox, % "x6 y+8 w239 r11 section +vscroll +hscroll hwnd" "messagesListbox"
 
-        gui, % Gui.hwnd ":add", button, % "y+6 w93 section hwnd" "refreshItemsButton", % "Refresh list"
+        gui, % Gui.hwnd ":add", button, % "x+3 ys0 w93 section hwnd" "refreshItemsButton", % "Refresh list"
         gui, % Gui.hwnd ":add", button, % "y+5 w93 disabled hwnd" "moveUpItemButton", % "Move up"
         gui, % Gui.hwnd ":add", button, % "y+5 w93 disabled hwnd" "moveDownItemButton", % "Move down"
         gui, % Gui.hwnd ":add", button, % "y+5 w45 disabled hwnd" "deleteItemButton", % "Delete"

@@ -100,7 +100,7 @@ class UseKeyBehaviour {
 
             case 3:
                 Send % "{Blind}{" WarframeValues.keys.use "}"
-                sleep, 120
+                sleep, 200
                 Send % "{Blind}{y}"
                 sleep, 80
                 Send % "{Blind}{esc}"
