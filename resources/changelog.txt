@@ -1,10 +1,12 @@
 v1.2.0
 - added "Melee Fire Rate" function
 - added the "Custom Teleport" function
-- mouse now will automatically move within window for faster interactions
-- clicking on a function will now display a mini-tutorial
+- mouse now will automatically move within macro window for faster interactions
+- interruption of Automatic Chat now will display a tooltip instead of a message box to improve usability
 - added a filtering option to "Automatic Chat"
+- clicking on a function will now display a mini-tutorial
 - slightly increased wait time for AutoCipher in "Use Key Behaviour" function
 - added few random phrases (this is the last time it will display in the changelogs, so it won't ruin the surprise of finding new phrases)
 - fixed auto sort checkbox in "Automatic Chat" having ERROR has text when no settings are saved
+- fixed timed mode in "Automatic Abilities" not switching to seconds if user selected seconds when reloading the macro
 - made several changes in the code

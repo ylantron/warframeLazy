@@ -209,9 +209,9 @@ class AutomaticAbilities {
                 timeLoaded := (timeModeLoaded = 1 ? "1000" : "1")
             }
 
-            AutomaticAbilitiesTab.modeControls[A_Index].getControl(this.controlsName.dropdownlist).setSelectedItem(timeModeLoaded) ;guiControl, choose, % AutomaticAbilitiesTab.timeControls[A_Index].timeDropDownList, % timeModeLoaded
+            AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.dropdownlist).setSelectedItem(timeModeLoaded) ;guiControl, choose, % AutomaticAbilitiesTab.timeControls[A_Index].timeDropDownList, % timeModeLoaded
             this.switchTime(A_Index)
-            AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.updown).setText(timeLoaded) ;guiControl, text, % AutomaticAbilitiesTab.timeControls[A_Index].timeUpDown, % timeLoaded
+            AutomaticAbilitiesTab.timeControls[A_Index].getControl(this.controlsName.updown).setText(timeLoaded)
 
             this.setState(A_Index)
         }

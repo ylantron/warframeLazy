@@ -15,7 +15,7 @@ class AutomaticChatTab {
         gui, % Gui.hwnd ":add", button, % "x+5 w44 h22 disabled hwnd" "editItemButton", % "Edit"
 
         gui, % Gui.hwnd ":add", text, % "x6 y+16 hwnd" "filterLabel", % "Filter:"
-        gui, % Gui.hwnd ":add", dropdownList, % "x+7 yp-4 w206 hwnd" "filterDropDownList", % "All||Recruiting|Trading|Private Messages|Miscellaneous"
+        gui, % Gui.hwnd ":add", dropdownList, % "x+7 yp-4 w206 hwnd" "filterDropDownList", % "All||Recruiting|Trading|Commands|Private Messages|Miscellaneous"
         gui, % Gui.hwnd ":add", checkbox, % "x+5 yp3 checked1 hwnd" "autoSortCheckbox", % "Automatic Sort"
 
         gui, % Gui.hwnd ":add", listbox, % "x6 y+8 w239 r11 section +vscroll +hscroll hwnd" "messagesListbox"

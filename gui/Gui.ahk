@@ -1,4 +1,5 @@
 #include %A_ScriptDir%/gui/Message.ahk
+#include %A_ScriptDir%/gui/Tooltip.ahk
 #include %A_ScriptDir%/gui/Welcome.ahk
 #include %A_ScriptDir%/gui/StatusBar.ahk
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

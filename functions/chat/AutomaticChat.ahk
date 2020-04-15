@@ -6,6 +6,7 @@ class AutomaticChat {
     static chatDelay := 120000
     static chatTimer
     static checkTimer
+    static tooltipChatDisabled := new ToolTip("Automatic chat was disabled", (A_ScreenWidth / 2) - 100, (A_ScreenHeight / 2) - 4)
 
     include() {
         this.bindFunctions()
@@ -223,6 +224,9 @@ class AutomaticChat {
                 OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTT ")
                 OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "PC "))) {
                 str .= this.messagesListboxItems[A_Index] "|"
+            } else if ((AutomaticChatTab.controls.filterDropDownList.getContent() = "Commands")
+            AND (substr(this.messagesListboxItems[A_Index], 1, 1) = "/")) {
+                str .= this.messagesListboxItems[A_Index] "|"
             } else if ((AutomaticChatTab.controls.filterDropDownList.getContent() = "Private Messages")
             AND (substr(this.messagesListboxItems[A_Index], 1, 3) = "/w ")) {
                 str .= this.messagesListboxItems[A_Index] "|"
@@ -232,6 +236,7 @@ class AutomaticChat {
                     OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTS ")
                     OR  (substr(this.messagesListboxItems[A_Index], 1, 4) = "WTT ")
                     OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "PC ")
+                    OR  (substr(this.messagesListboxItems[A_Index], 1, 1) = "/")
                     OR  (substr(this.messagesListboxItems[A_Index], 1, 3) = "/w ")) {
                     continue
                 }
@@ -372,13 +377,17 @@ class AutomaticChat {
             input, val, l1 i
         } until (val != "")
 
-        new Message("Automatic chat was disabled")
+        this.tooltipChatDisabled.show()
+        new Timer(-5000, this, "clearTooltip", "", 1)
 
         this.chatTimer.stop()
-        send, % "{esc}"
 
         this.chatTimer := ""
         this.checkTimer := ""
+    }
+
+    clearTooltip() {
+        this.tooltipChatDisabled.hide()
     }
 
     loadSettings() {

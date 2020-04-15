@@ -106,17 +106,17 @@ class CustomTeleport {
         sleepVal := 100
 
         Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
-        sleep, % sleepVal
 
+        sleep, % sleepVal
         send, % "{" WarframeValues.keys.chat "}"
+
         sleep, % sleepVal
-        
         send, % "/unstuck"
+
         sleep, % this.delay
-
         send, % "{enter}"
-        sleep, % sleepVal
 
+        sleep, % sleepVal + 100
         Send, % "{Blind}{" WarframeValues.keys.abilities[5] "}"
 
         this.timer.start()
